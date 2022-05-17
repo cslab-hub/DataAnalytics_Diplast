@@ -43,7 +43,7 @@ if add_selectbox == 'Home':
 # if add_selectbox == 'Matrix Profile':
 #     return_matrix_profile()
 
-if add_selectbox == 'Comparison':
+if add_selectbox == 'Data Comparison':
     return_comparison()
     
 if add_selectbox == 'Data Inspection':

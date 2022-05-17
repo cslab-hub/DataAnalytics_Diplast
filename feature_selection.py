@@ -28,7 +28,7 @@ data = data_loader()
 data.insert(0,'Select a Dataset')
 
 def return_feature_selection():
-    st.title('Create Correlation plots')
+    st.header('Create Correlation plots')
 
     st.markdown("""Correlation is a statistical term which refers to how close two variables have a linear relationship to each other.
     Variables that have a linear relationship tell us something about how these variables move in relation to each other.
@@ -67,18 +67,23 @@ def return_feature_selection():
 
         .set_caption('Table 2.'))
 
-    st.title('Interpet the correlations')
+    st.subheader('Interpet the correlations')
 
-    st.markdown("""In table 2, we see the correlations between the variables. A red colored surface means a high positive correlation, A blue surface indicates a negative correlation. 
-    On the diagonal we see a perfect red correlation of 1, which makes sense since we see this correlation exists between the same variable on both x and y-axis.  
-    The table above shows 
-    """)
-
-    st.title('PCA Analysis')
     st.markdown('''
-    A technique to reduce the dimensionality of your dataset is by performing Principal Component Analysis.
-    PCA uses a set of large variables by combining them together to retain as much as information as possible.
+    In Table 2, we see the correlations between the variables. A red colored surface means a high positive correlation, A blue surface indicates a negative correlation. 
+    On the diagonal we see a perfect red correlation of 1, which makes sense since we see this correlation exists between the same variable on both x and y-axis.
+    
+    Our advice: if we look at Table 2, we recommend that all variables that have a high correlation (≈ 0.9 or ≈ -0.9 and above) can be removed from the dataset.
+    ''')
+
+    st.header('Principal Component Analysis')
+    st.markdown('''
+    Another method to reduce the amount of variables in your dataset (e.g., dimensionality reduction) is by performing Principal Component Analysis (PCA). 
+    This technique uses a set of large variables by combining them together to retain as much as information as possible.
     PCA dates back to the 1990's and is one of the most widely used analysis techniques in Data Science.
+    
+    Let's see what PCA can tell us about the dataset. For this, we can choose to use all variables. However, if there is a clear target variable. For example, the class that you want to predict.
+    We recommend to remove this one from the dataset. You can choose your preference for this in the box below:
     ''')
 
     from sklearn.preprocessing import StandardScaler # for standardizing the Data
@@ -87,7 +92,7 @@ def return_feature_selection():
     X = dataset
     option_list = [i for i in X.columns]
     option_list.insert(0,'select something or keep all variables')
-    option = st.selectbox('Which variable resprents the labels for the given dataset? We will separate this variable from the rest of the dataset ', option_list, key=1)
+    option = st.selectbox('Which variable resprents the target variable for the given dataset? We will separate this variable from the rest of the dataset ', option_list, key=1)
     if option != 'select something or keep all variables':
         X = X.drop(option, axis=1)
     else:
@@ -106,7 +111,32 @@ def return_feature_selection():
     most_important = [np.abs(pca.components_[i]).argmax() for i in range(n_pcs)]
     initial_feature_names = X.columns
     most_important_names = [initial_feature_names[most_important[i]] for i in range(n_pcs)]
-    most_important_names = list(dict.fromkeys(most_important_names))
+    most_important_names2 = list(dict.fromkeys(most_important_names))
     
-    for i,j in enumerate(most_important_names):
-        st.write(f"{i + 1}th most important variable = {j}")
+    for i,j in enumerate(most_important_names2):
+        st.write(f"{i + 1}. Most important variable = {j}")
+    
+    st.subheader('Interpet the Principal Component Analysis')
+    st.markdown(''' 
+    After executing PCA, we see that certain variables are marked as most important. These variables explain most of the variance within the dataset. Therefore, it seems that something is going on in these variables. 
+
+    Our advice: We recommend to plot the variables that have the highest importance based on PCA. In this way, you are able to assess if these variables are actually usable in the follow-up analysis. If these variables seem
+    to be less relevant as PCA suggests, we recommend to remove them from the dataset and re-run the PCA again. In this way, a more interesting and more informative set of variables remain, which is essential for data analytics.
+    plotting the most important variables can be done below:
+    ''')
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        
+
+        option2 = st.selectbox(
+            'Which variable do you want to view?',
+            (i for i in sorted(set(most_important_names))), key=2)
+
+        fig, ax = plt.subplots()
+        ax.plot(dataset[option2])
+        st.pyplot(fig)
+            
+
+    

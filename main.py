@@ -40,8 +40,8 @@ if add_selectbox == 'Home':
     
     
 #! Page for the file format
-if add_selectbox == 'Matrix Profile':
-    return_matrix_profile()
+# if add_selectbox == 'Matrix Profile':
+#     return_matrix_profile()
 
 if add_selectbox == 'Comparison':
     return_comparison()

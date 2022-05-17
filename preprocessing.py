@@ -25,7 +25,7 @@ data.insert(0,'Select a Dataset')
 
 def return_preprocessing():
 
-    st.title('First inspect your data')
+    st.title('First inspect your data2')
     st.markdown("""
         
     """)

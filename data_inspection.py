@@ -9,15 +9,25 @@ import stumpy
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt 
+import sys
 
+if sys.platform == 'win32':
+    string_splitter = '\\'
+else:
+    string_splitter = '/'
 
+print(sys.platform, string_splitter)
 def data_loader():
     found_files = []
     cwd = os.getcwd()
     for roots, dirs, files in sorted(os.walk(cwd)):
         for filename in sorted(files):
             if filename.endswith(".csv"):
+                print(filename)
+                # data = pd.read_csv(os.path.join(roots,filename))
                 found_files.append(os.path.join(roots,filename))
+                print(found_files)
+                print(sys.platform)
     return found_files
 
 data = data_loader()
@@ -28,11 +38,14 @@ def return_preprocessing():
     st.title('First inspect your data')
     st.markdown("""
         While the data should have already been checked with the tips from the Data Validation tool, we should again check if indeed our data now is correct.
+        In the following dropdown box, select the dataset that you want to view.
+        This dataset should be put into the data folder where this software runs from.
     """)
+
 
     option = st.selectbox(
         'Which dataset do you want to view?',
-        (i for i in data), format_func= lambda x:  str(x).split('/')[-1], key=1)
+        (i for i in data), format_func= lambda x:  str(x).split(string_splitter)[-1], key=1)
     if option == "Select a Dataset":
         st.stop()
     

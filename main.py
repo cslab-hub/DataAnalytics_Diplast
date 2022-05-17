@@ -8,7 +8,7 @@ from PIL import Image
 from home import *
 from matrix_profile import *
 from comparison import *
-from preprocessing import *
+from data_inspection import *
 # from forecast import *
 from ts_classifier import *
 from final_report import *
@@ -27,7 +27,7 @@ st.sidebar.title("Select a Module")
 
 add_selectbox = st.sidebar.radio(
     "Choose one of the analytics options:",
-    ("Home",'Preprocessing',"Feature Selection","Matrix Profile",'Comparison',"Classifier","Final Data Report"),format_func= lambda x: 'Home' if x == 'Home' else f"{x}",help="Please select one of the options that aligns with your analytics needs."
+    ("Home",'Data Inspection',"Feature Selection","Matrix Profile",'Comparison',"Classifier","Final Data Report"),format_func= lambda x: 'Home' if x == 'Home' else f"{x}",help="Please select one of the options that aligns with your analytics needs."
     
 )         
 
@@ -46,7 +46,7 @@ if add_selectbox == 'Matrix Profile':
 if add_selectbox == 'Comparison':
     return_comparison()
     
-if add_selectbox == 'Preprocessing':
+if add_selectbox == 'Data Inspection':
     return_preprocessing()
 
 if add_selectbox == 'Feature Selection':

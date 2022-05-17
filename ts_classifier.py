@@ -55,18 +55,26 @@ data_files.insert(0,'Select a Dataset')
 # print(data)
 def return_classifier():
 
-
-    st.header('Choose your data for classification (if target variable exists)')
-
+    st.header("Classification Tasks")
     st.markdown("""
         One of the most used applications in the field of Data Science is Classification. The idea behind classification is to predict the class, also called target variable, of the given data points. 
         For example, spam detection by your e-mail client can be seen as a classification problem. In this case, we talk about a binary classification problem since there are only two outcomes,
         e.g., Spam (0) and Not Spam (1). A classifier, which is an algorithm used to learn from the data how the input variables relate to the specific class. Generally speaking,
         the data will be divided into a train and test set. In the e-mail use case, known spam and non-spam e-mails are used as training data. If the classifier is trained accuractely, 
         it can be used to detect unknown e-mails. The test data, which is separated in an earlier stage, is used to validate the performance of a given classifier. If the performance is good enough on 
-        unseen data (the test data), we can assume that with future instances, the classifier will be able to make the distinction between classes. 
+        unseen data (the test data), we can assume that with future observations, the classifier will be able to make the distinction between classes. 
 
+        For this tool, we are mainly interested in the performance of the classifier so that we can determine which variable contributed the most to this outcomes. Thus, when we achieve a high accuracy score,
+        we can identify which variables are responsible for this particular score. With this information, you are able to do a further investigation on these variables in your production process. This could help
+        with optimizing the process of increasing the uptake of recycled material. 
+
+        As a first step, we need to identify which dataset you want to inspect, which can be chosen in the box below:
         """)
+
+
+    # st.header('Choose your data for classification (if target variable exists)')
+
+
 
     option = st.selectbox(
         'Which dataset do you want to use for your classification problem?',

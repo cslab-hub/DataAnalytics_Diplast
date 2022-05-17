@@ -27,7 +27,7 @@ st.sidebar.title("Select a Module")
 
 add_selectbox = st.sidebar.radio(
     "Choose one of the analytics options:",
-    ("Home",'Data Inspection',"Feature Selection","Matrix Profile",'Comparison',"Classifier","Final Data Report"),format_func= lambda x: 'Home' if x == 'Home' else f"{x}",help="Please select one of the options that aligns with your analytics needs."
+    ("Home",'Data Inspection',"Feature Selection",'Comparison',"Classifier","Final Data Report"),format_func= lambda x: 'Home' if x == 'Home' else f"{x}",help="Please select one of the options that aligns with your analytics needs."
     
 )         
 

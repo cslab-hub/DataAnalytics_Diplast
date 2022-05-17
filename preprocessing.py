@@ -25,9 +25,9 @@ data.insert(0,'Select a Dataset')
 
 def return_preprocessing():
 
-    st.title('First inspect your data2')
+    st.title('First inspect your data')
     st.markdown("""
-        
+        While the data should have already been checked with the tips from the Data Validation tool, we should again check if indeed our data now is correct.
     """)
 
     option = st.selectbox(
@@ -58,3 +58,9 @@ def return_preprocessing():
         """)
 
     st.pyplot(fig)
+
+    st.markdown("""
+    If the data visible here does not correspond to what you expect, go back a few steps.
+    Your data should consist of seperate variables, which starts with a variable containing the notion of time.
+    Each variable should be measured at the moment in time, such as shown here:
+    """)

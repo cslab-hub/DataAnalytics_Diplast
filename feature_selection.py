@@ -33,10 +33,9 @@ def return_feature_selection():
     st.markdown("""Correlation is a statistical term which refers to how close two variables have a linear relationship to each other.
     Variables that have a linear relationship tell us something about how these variables move in relation to each other.
     For example, if the linear relationship is very high, it means that if one of the variables increases, the other will also increase with a similar amount.
-    However, a high linear relationship 
-    
-    less about our dataset, since measuring one tells you something about the other.
-    In other words, if two variables have a high correlation, we can drop on of the two!
+    However, a high linear relationship means that both variables explain the dataset almost equally. Therefore, for further analysis we only take one of these variables for our task. 
+    In other words, if two variables have a high correlation, we can drop on of the two! 
+    This results in a more streamlined dataset which means less computational resources are needed for the task. But first, let's check the correlations between the variables of your dataset:     
     """)
 
     option = st.selectbox(
@@ -67,6 +66,13 @@ def return_feature_selection():
         
 
         .set_caption('Table 2.'))
+
+    st.title('Interpet the correlations')
+
+    st.markdown("""In table 2, we see the correlations between the variables. A red colored surface means a high positive correlation, A blue surface indicates a negative correlation. 
+    On the diagonal we see a perfect red correlation of 1, which makes sense since we see this correlation exists between the same variable on both x and y-axis.  
+    The table above shows 
+    """)
 
     st.title('PCA Analysis')
     st.markdown('''

@@ -56,7 +56,7 @@ data_files.insert(0,'Select a Dataset')
 def return_classifier():
 
 
-    st.title('Choose your data for classification (if target variable exists)')
+    st.header('Choose your data for classification (if target variable exists)')
 
     st.markdown("""
         One of the most used applications in the field of Data Science is Classification. The idea behind classification is to predict the class, also called target variable, of the given data points. 

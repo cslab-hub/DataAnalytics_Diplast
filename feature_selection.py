@@ -52,7 +52,16 @@ def return_feature_selection():
 
     dataset = dataset.select_dtypes(include=numerics)
 
-    st.table(dataset.head(5))
+    st.table(dataset.head(5)\
+        .style.set_caption("Table 1: Dataset."))
+
+
+            
+
+    st.markdown('''
+    In the table above, we see the first 5 observations for every variable in the dataset. Based on this information, we can see the difference between the values for every variable and already make an asumption of the measurements that occurred in the dataset.
+    ''')
+    
     corr = dataset.corr().round(2)
     corr.style.background_gradient(cmap='coolwarm')
     st.table(corr.style.background_gradient(cmap='coolwarm')\

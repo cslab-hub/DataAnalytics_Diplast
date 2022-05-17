@@ -1,0 +1,14 @@
+numpy
+scipy
+streamlit
+sklearn
+matplotlib
+pandas
+stumpy
+pmdarima
+openpyxl
+seaborn
+streamlit-pandas-profiling
+pandas-profiling
+statsmodels
+jpype1

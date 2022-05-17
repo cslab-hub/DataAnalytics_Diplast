@@ -27,4 +27,29 @@ data
 
 # plt.plot(data.iloc[:,7])
 # %%
-data
+data = pd.read_parquet(r"C:\Users\20191577\Downloads\dataset.parquet")
+
+#%%
+df = data.iloc[0:2,:]
+df
+
+#%%
+df = df.loc[:,~df.columns.str.startswith('TCN')]
+df = df.loc[:,~df.columns.str.startswith('MET')]
+df = df.loc[:,~df.columns.str.startswith('TCE')]
+df = df.loc[:,~df.columns.str.startswith('SIM')]
+df = df.loc[:,~df.columns.str.startswith('LBL')]
+df = df.loc[:,~df.columns.str.startswith('SET')]
+df = df.loc[:,~df.columns.str.startswith('IR')]
+df = df.loc[:,~df.columns.str.startswith('CV')]
+df = df.loc[:,~df.columns.str.startswith('DOS')]
+df = df.loc[:,~df.columns.str.startswith('DRY')]
+df = df.loc[:,~df.columns.str.startswith('DXP')]
+df = df.loc[:,~df.columns.str.startswith('E77')]
+df = df.loc[:,~df.columns.str.startswith('ENV')]
+df = df.loc[:,~df.columns.str.startswith('SCA')]
+
+
+
+print(df.shape)
+print(df.columns)

@@ -27,7 +27,7 @@ data = data_loader()
 data.insert(0,'Select a Dataset')
 
 def return_feature_selection():
-    st.title('Create Correlation plots')
+    st.title('Create Correlation plots blabla')
 
 
     # st.markdown("""Correlation is a statistical term which refers to how close two variables have a linear relationship to each other.

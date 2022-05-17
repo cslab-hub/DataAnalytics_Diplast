@@ -16,7 +16,7 @@ if sys.platform == 'win32':
 else:
     string_splitter = '/'
 
-print(sys.platform, string_splitter)
+# print(sys.platform, string_splitter)
 def data_loader():
     found_files = []
     cwd = os.getcwd()

@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 data = pd.read_parquet(r"C:\Users\20191577\Downloads\data_processed.parquet")
-data = data.iloc[1,:]
+data = data.iloc[60,:]
 of_interest = ['TIMESERIES_Druck_links[N/mm2]',
 'TIMESERIES_Druck_rechts[N/mm2]',
 'TIMESERIES_Kraft_links[N]',
@@ -20,7 +20,7 @@ data.columns = ['print_left', 'pressure_right', 'force_left' ,'force_right' ,'Th
 data = data.drop(columns=['timestamp'])
 
 data.insert(0,'TIME', pd.date_range(start=pd.Timestamp('10:10:15'), periods=data.shape[0], freq='1s'))
-data.to_csv('data/plastic_welding.csv', index=False)
+data.to_csv('data/plastic_welding_2.csv', index=False)
 data
 
 

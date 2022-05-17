@@ -9,6 +9,7 @@ import stumpy
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt 
+import matplotlib.dates as mdates
 import sys 
 # dataframe = pd.DataFrame(np.random.randint(80,100,size=(100, 4)))
 # dataframe.columns = ['var1','var2','var3','var4']
@@ -67,6 +68,9 @@ def return_comparison():
         # fig = plt.plot(plot[option2])
         
         fig, ax = plt.subplots()
+        myFmt = mdates.DateFormatter("%H:%M:%S")
+
+        ax.xaxis.set_major_formatter(myFmt)
         ax.plot(plot[option2])
         st.pyplot(fig)
         
@@ -93,5 +97,7 @@ def return_comparison():
         # fig = plt.plot(plot[option2])
         
         fig, ax = plt.subplots()
+        myFmt = mdates.DateFormatter("%H:%M:%S")
+        ax.xaxis.set_major_formatter(myFmt)
         ax.plot(plot[option4])
         st.pyplot(fig)

@@ -84,10 +84,15 @@ def return_classifier():
         st.stop()
     dataset = pd.read_csv(option)
 
-    st.table( dataset.head(3))
+    st.table( dataset.head(5))
+    st.markdown('''
+    In the table above, we see the first 5 observations for every variable in the dataset. Based on this information, we can see the difference between the values for every variable and already make an asumption of the measurements that occurred in the dataset. Also, we might be able to identify the target variable.
+    ''')
 
-
-
+    st.subheader('Target variable selection')
+    st.markdown('''
+    Now that we've seen the data format, we will choose the target variable from the dataset in the box below:
+    ''')
 
     option2 = st.selectbox(
         'Which variable resprents the labels for the given dataset? We will separate this variable from the rest of the dataset ', 
@@ -96,9 +101,19 @@ def return_classifier():
     dataset = dataset.drop(columns = [option2])
 
 
-    st.markdown(f""" Now that we have identified which data we will use to classify the labels represented by {option2}, we can start to proceed with making a classifier.
-        Please note in the table below that the column containing the different classes is removed.""") 
-    st.table( dataset.head(3))
+    st.markdown(f""" Now that we have identified which data we will use to classify the labels represented by {option2}, we can start to proceed with making a classifier. The next step is to choose the right classifier for the job.
+    For this, we will give you some additional information for choosing the right classifier.
+
+    To get a general idea of what a classifier can do, we give you the option to choose between several algorithms:
+    - K Nearest Neighbors (KNN)
+    - Naive Bayes (NB)
+    - Tree based classifiers (Decision Tree, Random Forest) 
+
+    The first two models are fairly simple classification algorithms. KNN attempts to predict the correct class by calculating the distance between data points. 
+    Afterwards it selects, based on the parameter "K", which data point comes closest to a certain class based on its probability. LR on the other hand focuses on fitting a decision boundary between 
+    
+                """) 
+    # st.table( dataset.head(3))
 
 
 
@@ -107,8 +122,6 @@ def return_classifier():
     st.markdown("""
     
 
-
-        The next step is to determine the sequence length that you expect in your data. This can be adapted by using the slider below. If you keep the slider at zero, the data will not be separated in sequences and will be fed to the classifier point-by-point.
 
 
         """)
@@ -183,12 +196,11 @@ def return_classifier():
 
     
     models = []
-    models.append(('LR', LogisticRegression(solver='liblinear', multi_class='ovr')))
-    models.append(('LDA', LinearDiscriminantAnalysis()))
-
+    # models.append(('LR', LogisticRegression(solver='liblinear', multi_class='ovr')))
+    # models.append(('LDA', LinearDiscriminantAnalysis()))
     models.append(('CART', DecisionTreeClassifier()))
     models.append(('NB', GaussianNB()))
-    models.append(('SVM', SVC(gamma='auto')))
+    # models.append(('SVM', SVC(gamma='auto')))
 
     results = []
     names = []

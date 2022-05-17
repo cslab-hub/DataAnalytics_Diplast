@@ -31,7 +31,11 @@ def return_feature_selection():
     st.title('Create Correlation plots')
 
     st.markdown("""Correlation is a statistical term which refers to how close two variables have a linear relationship to each other.
-    Variables that have a linear relationship tell us less about our dataset, since measuring one tells you something about the other.
+    Variables that have a linear relationship tell us something about how these variables move in relation to each other.
+    For example, if the linear relationship is very high, it means that if one of the variables increases, the other will also increase with a similar amount.
+    However, a high linear relationship 
+    
+    less about our dataset, since measuring one tells you something about the other.
     In other words, if two variables have a high correlation, we can drop on of the two!
     """)
 

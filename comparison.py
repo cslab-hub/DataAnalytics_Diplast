@@ -40,7 +40,11 @@ data = data_loader()
 
 # print(data)
 def return_comparison():
+    st.title('Compare two time series')
+    st.markdown("""
+        To check what happened within every individual time serie and to compare them with each other, we can plot them on this tab and see what happened throughout the process.
 
+        """)
     col1, col2 = st.columns(2)
 
     with col1:

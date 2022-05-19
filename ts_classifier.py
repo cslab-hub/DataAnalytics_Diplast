@@ -142,76 +142,87 @@ def return_classifier():
     st.write(f'training set size: {x_train.shape[0]} samples \ntest set size: {x_test.shape[0]} samples')
 
     
-    if option3 == "K Nearest Neighbors":
-        k_range = list(range(1,50))
-        weight_options = ["uniform", "distance"]
-        param_grid = dict(n_neighbors = k_range, weights = weight_options)
-        classifier = KNeighborsClassifier()
+ def classification(classifier,param_grid):
+        cv_classifier = GridSearchCV(estimator=classifier, param_grid=param_grid, cv= 2, verbose = 100, n_jobs = -1)
+        cv_classifier.fit(scaled_x_train, y_train)        
+        
+        sorted(cv_classifier.cv_results_.keys())
+        cv_best = cv_classifier.best_estimator_
+        predictions = cv_best.predict(scaled_x_test)
+
+
+
+        mat = confusion_matrix(y_test, predictions)
+        fig, ax = plt.subplots()
+        ax = sns.heatmap(mat.T, square=True, annot=True, fmt='d')
+        ax.set_xlabel('True label')
+        ax.set_ylabel('Predicted label');
+
+        classifier_accuracy = round(metrics.accuracy_score(y_test, predictions),4)
+
+        st.write(f"Based on the analysis using the {option3} algorithm, the classifier was able to predict the right class with an accuracy of {classifier_accuracy} and parameter settings {cv_best}")
+        # st.pyplot(fig)
+
+
+
+        if option3 != 'Logistic Regression':
+
+            feature_importance = cv_classifier.best_estimator_.feature_importances_
+            print(feature_importance)
+            f_i = list(zip(features_dataset,feature_importance)) 
+            f_i.sort(key = lambda x : x[1])
+            fig2, ax2 = plt.subplots()
+            ax2 =  plt.barh([x[0] for x in f_i],[x[1] for x in f_i])
+            if len(features_dataset) > 10:
+                ax2 = plt.tick_params(axis="y", labelsize=4)
+            # ax2.set_yticklabels(fontsize=16)
+            return fig2,fig
+        else:
+            return fig
+    
+    if option3 == "Decision Tree":
+        param_grid = {'criterion':['gini','entropy'],'max_depth':[4,5,6,7,8,9,10,11,12,15,20,30,40,50,70,90,120,150]}
+        classifier = DecisionTreeClassifier()
+        features_dataset = dataset.columns
+        fig2,fig = classification(classifier,param_grid)
+        st.pyplot(fig2)
+        st.pyplot(fig)
+
 
 
     if option3 == "Random Forest":
 
-        classifier = RandomForestClassifier(n_jobs=-1,max_features= 'sqrt' ,n_estimators=50, oob_score = True) 
+        classifier = RandomForestClassifier(n_jobs=-1,max_features= 'sqrt' ,n_estimators=50, oob_score = True, random_state=1) 
 
         param_grid = { 
-            'n_estimators': range(1,120,10),
+            'n_estimators': range(20,100,10),
             'max_features': ['auto', 'sqrt', 'log2']
             }
         features_dataset = dataset.columns
+        fig2,fig = classification(classifier,param_grid)
+        st.pyplot(fig2)
+        st.pyplot(fig)
 
 
-    cv_classifier = GridSearchCV(estimator=classifier, param_grid=param_grid, cv= 5, verbose = 100, n_jobs = -1)
-    cv_classifier.fit(scaled_x_train, y_train)
-    print("")
-    print(cv_classifier.best_estimator_)
-    print("")
-    
-    feature_importance = cv_classifier.best_estimator_.feature_importances_
-    f_i = list(zip(features_dataset,feature_importance)) 
-    f_i.sort(key = lambda x : x[1])
-    fig2, ax2 = plt.subplots()
-    ax2 =  plt.barh([x[0] for x in f_i],[x[1] for x in f_i]) 
-    ax2 = plt.tick_params(axis="y", labelsize=8)
-    st.pyplot(fig2)
-    
-    
-    sorted(cv_classifier.cv_results_.keys())
-    cv_best = cv_classifier.best_estimator_
-    predictions = cv_best.predict(scaled_x_test)
+    if option3 == "Logistic Regression":
 
+        classifier = LogisticRegression()
+        param_grid = {
+            'C': [0.001, 0.01, 0.1, 1, 10, 100, 1000],
+            'penalty': ['l1', 'l2'],
+            'solver': ['newton-cg', 'lbfgs', 'liblinear', 'sag', 'saga']
+            }
 
-
-    mat = confusion_matrix(y_test, predictions)
-    fig, ax = plt.subplots()
-    ax = sns.heatmap(mat.T, square=True, annot=True, fmt='d')
-    ax.set_xlabel('True label')
-    ax.set_ylabel('Predicted label');
-
-    classifier_accuracy = round(metrics.accuracy_score(y_test, predictions),4)
-
-    st.write(f"Based on the analysis using the {option3} algorithm, the classifier was able to predict the right class with an accuracy of {classifier_accuracy} and parameter settings {cv_best}")
-    st.pyplot(fig)
-
+        features_dataset = dataset.columns
+        fig = classification(classifier,param_grid)
+        st.pyplot(fig)
 
 
     
-    models = []
-    # models.append(('LR', LogisticRegression(solver='liblinear', multi_class='ovr')))
-    # models.append(('LDA', LinearDiscriminantAnalysis()))
-    models.append(('CART', DecisionTreeClassifier()))
-    models.append(('NB', GaussianNB()))
-    # models.append(('SVM', SVC(gamma='auto')))
 
-    results = []
-    names = []
-    for name, model in models:
-        kfold = StratifiedKFold(n_splits=10, random_state=1, shuffle=True)
-        cv_results = cross_val_score(model, scaled_x_train, y_train, cv=kfold, scoring='accuracy', n_jobs = -1, verbose = 2)
-        results.append(cv_results)
-        names.append(name)
-        st.write('%s: %f (%f)' % (name, round(cv_results.mean(),2), cv_results.std()))
+
 
         
-    print(np.unique(y_test, return_counts =True))
-    print(np.unique(y_train, return_counts =True))
+        
+
 

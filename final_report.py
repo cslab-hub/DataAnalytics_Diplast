@@ -29,7 +29,7 @@ data.insert(0,'Select a Dataset')
 # print(data)
 def return_report():
 
-    ls = ['']
+    # ls = ['']
     option = st.selectbox(
         'Which dataset do you want to view?',
         # ['',i for i in data], format_func=lambda x: 'Select an option' if x == '' else x)

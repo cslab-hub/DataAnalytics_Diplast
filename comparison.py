@@ -38,7 +38,6 @@ def data_loader():
 
 data = data_loader()
 
-# print(data)
 def return_comparison():
     st.title('Compare two time series!')
     st.markdown("""

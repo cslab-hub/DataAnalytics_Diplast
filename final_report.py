@@ -11,6 +11,12 @@ import numpy as np
 import matplotlib.pyplot as plt 
 from pandas_profiling import ProfileReport
 from streamlit_pandas_profiling import st_profile_report
+import sys
+
+if sys.platform == 'win32':
+    string_splitter = '\\'
+else:
+    string_splitter = '/'
 
 def data_loader():
     found_files = []
@@ -37,7 +43,7 @@ def return_report():
         'Which dataset do you want to view?',
         # ['',i for i in data], format_func=lambda x: 'Select an option' if x == '' else x)
         # ['Select Dataset',[i for i in data]], format_func= lambda x:  str(x).split('/')[-1], key=1)
-        (i for i in data), format_func= lambda x:  str(x).split('/')[-1], key=1)
+        (i for i in data), format_func= lambda x:  str(x).split(string_splitter)[-1], key=1)
     if option == 'Select a Dataset':
         st.stop()
     dataset = pd.read_csv(option)
@@ -45,11 +51,6 @@ def return_report():
 
     st.write('You selected:', option)
     # dataset = dataset.select_dtypes('float64')
-
-
-
-
-
 
 
     profile = ProfileReport(dataset, title="Pandas Profiling Report", minimal = True)

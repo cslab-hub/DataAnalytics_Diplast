@@ -36,6 +36,12 @@ from sklearn.svm import SVC
 
 from sklearn import metrics
 import seaborn as sns
+import sys
+
+if sys.platform == 'win32':
+    string_splitter = '\\'
+else:
+    string_splitter = '/'
 
 classifier_list = ["RandomForestClassifier","KNeighborsClassifier"]
 
@@ -78,7 +84,7 @@ def return_classifier():
 
     option = st.selectbox(
         'Which dataset do you want to use for your classification problem?',
-        (i for i in data_files),format_func= lambda x:  str(x).split('/')[-1], key=1)
+        (i for i in data_files),format_func= lambda x:  str(x).split(string_splitter)[-1], key=1)
 
     if option == "Select a Dataset":
         st.stop()

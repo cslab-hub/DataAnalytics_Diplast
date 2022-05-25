@@ -6,11 +6,16 @@ import numpy as np
 from PIL import Image 
 import matplotlib.pyplot as plt 
 import os
-
+import sys
 # import seaborn as sns
 from statsmodels.tsa.stattools import grangercausalitytests
 
 #%%
+
+if sys.platform == 'win32':
+    string_splitter = '\\'
+else:
+    string_splitter = '/'
 
 
 def data_loader():
@@ -41,7 +46,7 @@ def return_feature_selection():
     option = st.selectbox(
     'Which dataset do you want to view?',
     # ['Select dataset',(i for i in data)], format_func= lambda x:  str(x).split('/')[-1], key=1)
-    (i for i in data), format_func= lambda x:  str(x).split('/')[-1], key=1)
+    (i for i in data), format_func= lambda x:  str(x).split(string_splitter)[-1], key=1)
 
     if option == "Select a Dataset":
         st.stop()

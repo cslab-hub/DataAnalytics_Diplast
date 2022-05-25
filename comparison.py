@@ -57,6 +57,10 @@ def return_comparison():
         # if option == "Select a Dataset":
         #     st.stop()
         plot = pd.read_csv(option)
+        if 'TIME' in plot.columns:
+            print('yes we found it')
+            plot['TIME'] = pd.to_datetime(plot['TIME'])
+            plot.set_index('TIME', inplace=True)
         # print(plot)
         option2 = st.selectbox(
             'Which variable do you want to view?',
@@ -65,10 +69,6 @@ def return_comparison():
         #     st.stop()
 
                     
-        if 'TIME' in plot.columns:
-            print('yes we found it')
-            plot['TIME'] = pd.to_datetime(plot['TIME'])
-            plot.set_index('TIME', inplace=True)
 
 
         # fig = plt.plot(plot[option2])

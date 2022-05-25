@@ -37,6 +37,7 @@ def data_loader():
     return found_files
 
 data = data_loader()
+# data.insert(0,'Select a Dataset')
 
 def return_comparison():
     st.title('Compare two time series!')
@@ -57,17 +58,19 @@ def return_comparison():
         #     st.stop()
         plot = pd.read_csv(option)
         # print(plot)
-
-        if 'TIME' in plot.columns:
-            print('yes we found it')
-            plot['TIME'] = pd.to_datetime(plot['TIME'])
-            plot.set_index('TIME', inplace=True)
-
         option2 = st.selectbox(
             'Which variable do you want to view?',
             (i for i in plot.columns), key=2)
         # if option2 == "Select a Dataset":
         #     st.stop()
+
+                    
+        if 'TIME' in plot.columns:
+            print('yes we found it')
+            plot['TIME'] = pd.to_datetime(plot['TIME'])
+            plot.set_index('TIME', inplace=True)
+
+
         # fig = plt.plot(plot[option2])
         
         fig, ax = plt.subplots()

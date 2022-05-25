@@ -52,8 +52,15 @@ def return_feature_selection():
 
     dataset = dataset.select_dtypes(include=numerics)
 
-    st.table(dataset.head(5)\
-        .style.set_caption("Table 1: Dataset."))
+    st.table(dataset.head(5).style.format(precision=2)\
+    .set_table_styles([
+                    {"selector":"caption",
+                    "props":[("text-align","center")],
+                    }
+
+                    ], overwrite=False)\
+
+        .set_caption('Table 1.'))
 
 
             

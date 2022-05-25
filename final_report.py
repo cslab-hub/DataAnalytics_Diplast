@@ -21,14 +21,17 @@ def data_loader():
                 print(filename)
                 # data = pd.read_csv(os.path.join(roots,filename))
                 found_files.append(os.path.join(roots,filename))
-    return found_files
+    return found_files,cwd
 
-data = data_loader()
+data,cwd = data_loader()
 data.insert(0,'Select a Dataset')
 
 # print(data)
 def return_report():
-
+    st.header('Data Report')
+    st.markdown("""The final module of our tool provides a general overview of your dataset for every specific variable.
+    This overview gives you a variety of insights such as alerts in the data, a histogram that shows the distribution of values and also the 5 most common and most extreme values.
+    With this information, you can get an indication of the measurements within your variables to check if the values align with the desired behavior of the variable. Also, this""")
     # ls = ['']
     option = st.selectbox(
         'Which dataset do you want to view?',
@@ -47,7 +50,18 @@ def return_report():
 
 
 
-    st.title('Profiling')
+
 
     profile = ProfileReport(dataset, title="Pandas Profiling Report", minimal = True)
     st_profile_report(profile)
+
+    option3 = st.selectbox(
+        "Would you like to download this data report?",
+        ["Select an option","Yes","No"])
+
+    if option3 == "Yes":
+        profile.to_file("data_report.html")
+        st.markdown(f"Your report is downloaded and can be found in the folder{cwd}")
+
+
+    

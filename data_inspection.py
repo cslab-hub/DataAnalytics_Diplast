@@ -72,6 +72,14 @@ def return_preprocessing():
 
     st.pyplot(fig)
 
+    st.write(f"""
+       To get some more information regarding the dataset, we can visualize some descritive statistics. For example, we are able to see how many instances occur in the dataset, the mean and standard deviation for every variable and more summary statistics.
+        The table below shows these statistics for the {option.split('/')[-1]} dataset.  
+        """)
+    st.dataframe(dataset.describe())
+
+    
+
     st.markdown("""
     If the data visible here does not correspond to what you expect, go back a few steps.
     Your data should consist of seperate variables, which starts with a variable containing the notion of time.

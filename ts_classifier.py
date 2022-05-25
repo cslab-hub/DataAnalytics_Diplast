@@ -105,12 +105,10 @@ def return_classifier():
     For this, we will give you some additional information for choosing the right classifier.
 
     To get a general idea of what a classifier can do, we give you the option to choose between several algorithms:
-    - K Nearest Neighbors (KNN)
-    - Naive Bayes (NB)
-    - Tree based classifiers (Decision Tree, Random Forest) 
+    - Decision Tree
+    - Random Forest
+    - Logistic Regression
 
-    The first two models are fairly simple classification algorithms. KNN attempts to predict the correct class by calculating the distance between data points. 
-    Afterwards it selects, based on the parameter "K", which data point comes closest to a certain class based on its probability. LR on the other hand focuses on fitting a decision boundary between 
     
                 """) 
     # st.table( dataset.head(3))
@@ -119,16 +117,11 @@ def return_classifier():
 
 
 
-    st.markdown("""
-    
 
-
-
-        """)
 
     option3 = st.selectbox(
         'Which classifier do you want to use?',
-        ('Select algorithm','K Nearest Neighbors', 'Random Forest'), key= 1)
+        ('Select an Algorithm','Decision Tree', 'Random Forest','Logistic Regression'), key= 1)
 
     x_train, x_test, y_train, y_test= train_test_split(dataset, target_data,
                                                    test_size= 0.2,
@@ -140,9 +133,10 @@ def return_classifier():
     scaled_x_train = scaler.fit_transform(x_train)
     scaled_x_test = scaler.transform(x_test)
     st.write(f'training set size: {x_train.shape[0]} samples \ntest set size: {x_test.shape[0]} samples')
+    st.write(f'Number of columns {len(dataset.columns)} and rows {len(dataset)}')
 
     
- def classification(classifier,param_grid):
+    def classification(classifier,param_grid):
         cv_classifier = GridSearchCV(estimator=classifier, param_grid=param_grid, cv= 2, verbose = 100, n_jobs = -1)
         cv_classifier.fit(scaled_x_train, y_train)        
         
@@ -179,7 +173,7 @@ def return_classifier():
             return fig2,fig
         else:
             return fig
-    
+
     if option3 == "Decision Tree":
         param_grid = {'criterion':['gini','entropy'],'max_depth':[4,5,6,7,8,9,10,11,12,15,20,30,40,50,70,90,120,150]}
         classifier = DecisionTreeClassifier()
@@ -218,11 +212,11 @@ def return_classifier():
         st.pyplot(fig)
 
 
-    
-
-
-
         
-        
+
+
+
+            
+            
 
 

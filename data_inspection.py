@@ -35,7 +35,7 @@ data.insert(0,'Select a Dataset')
 
 def return_preprocessing():
 
-    st.title('First inspect your data')
+    st.header('First inspect your data')
     st.markdown("""
         While the data should have already been checked with the tips from the Data Validation tool, we should again check if indeed our data now is correct.
         In the following dropdown box, select the dataset that you want to view.

@@ -59,8 +59,6 @@ df = df.loc[:,~df.columns.str.startswith('LBL_Sprue')]
 df = df.loc[:,~df.columns.str.startswith('LBL_NOK')]
 df = df.loc[:,~df.columns.str.startswith('LBL_Old')]
 
-
-
 print(df.shape)
 print(df.columns)
 df=df.dropna(axis=1)

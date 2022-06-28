@@ -88,3 +88,13 @@ def mp_individual_plot(data, mp_length=3):
     print('hello')
     #plt.show()
     return(fig)
+
+
+
+
+
+#%%
+import pandas as pd 
+
+data = pd.read_csv('data/injection_molding_single_values.csv')
+data.dropna(thresh=1)

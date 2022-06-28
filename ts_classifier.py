@@ -114,20 +114,14 @@ def return_classifier():
     - Decision Tree
     - Random Forest
     - Logistic Regression
+    - Random Forest Regressor (for Continuous target variables)
 
     
                 """) 
-    # st.table( dataset.head(3))
-
-
-
-
-
-
 
     option3 = st.selectbox(
         'Which classifier do you want to use?',
-        ('Select an Algorithm','Decision Tree', 'Random Forest','Logistic Regression'), key= 1)
+        ('Select an Algorithm','Decision Tree', 'Random Forest','Logistic Regression','Random Forrest Regressor'), key= 1)
 
     x_train, x_test, y_train, y_test= train_test_split(dataset, target_data,
                                                    test_size= 0.2,
@@ -156,7 +150,7 @@ def return_classifier():
         fig, ax = plt.subplots()
         ax = sns.heatmap(mat.T, square=True, annot=True, fmt='d')
         ax.set_xlabel('True label')
-        ax.set_ylabel('Predicted label');
+        ax.set_ylabel('Predicted label')
 
         classifier_accuracy = round(metrics.accuracy_score(y_test, predictions),4)
 
@@ -179,6 +173,29 @@ def return_classifier():
             return fig2,fig
         else:
             return fig
+    
+    def regression(regressor,param_grid):
+        from sklearn.metrics import mean_squared_error
+
+        cv_regressor = GridSearchCV(estimator=regressor, param_grid=param_grid, cv= 2, verbose = 100, n_jobs = -1)
+        cv_regressor.fit(scaled_x_train, y_train)        
+        
+        # sorted(cv_regressor.cv_results_.keys())
+        cv_best = cv_regressor.best_estimator_
+        predictions = cv_best.predict(scaled_x_test)
+
+        feature_importance = cv_regressor.best_estimator_.feature_importances_
+        # print(feature_importance)
+        st.write(f'we see an MSE of ={mean_squared_error(y_test, predictions):.4f}')
+
+
+        f_i = list(zip(features_dataset,feature_importance)) 
+        f_i.sort(key = lambda x : x[1])
+        fig2, ax2 = plt.subplots()
+        ax2 =  plt.barh([x[0] for x in f_i],[x[1] for x in f_i])
+        if len(features_dataset) > 10:
+            ax2 = plt.tick_params(axis="y", labelsize=4)
+        return fig2
 
     if option3 == "Decision Tree":
         param_grid = {'criterion':['gini','entropy'],'max_depth':[4,5,6,7,8,9,10,11,12,15,20,30,40,50,70,90,120,150]}
@@ -215,6 +232,19 @@ def return_classifier():
 
         features_dataset = dataset.columns
         fig = classification(classifier,param_grid)
+        st.pyplot(fig)
+
+    if option3 == "Random Forrest Regressor":
+        from sklearn.ensemble import RandomForestRegressor
+
+        classifier = RandomForestRegressor()
+        param_grid = { 
+            'n_estimators': range(20,200,10),
+            'max_features': ['auto', 'sqrt', 'log2']
+            }
+
+        features_dataset = dataset.columns
+        fig = regression(classifier,param_grid)
         st.pyplot(fig)
 
 

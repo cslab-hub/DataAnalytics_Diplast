@@ -63,13 +63,9 @@ df = df.loc[:,~df.columns.str.startswith('LBL_Old')]
 
 print(df.shape)
 print(df.columns)
-<<<<<<< HEAD
-df = df.dropna(axis=1)
+df=df.dropna(axis=1)
+print(df.shape)
 #%%
-=======
-
-
->>>>>>> 637c5e2db32e17350cd0f4c7c5d1e4207efcaaf0
 
 df.to_csv('data/injection_molding_single_values.csv', index=False)
 #%%
@@ -78,15 +74,11 @@ df
 
 #! Time series version
 import pandas as pd 
-<<<<<<< HEAD
 import numpy as np 
-=======
->>>>>>> 637c5e2db32e17350cd0f4c7c5d1e4207efcaaf0
 data = pd.read_parquet(r"C:\Users\20191577\Downloads\dataset.parquet")
 
 #%%
 df = data.iloc[:,:]
-<<<<<<< HEAD
 
 df = df[['DXP_Inj1PrsAct','DXP_MldCavPrs1Act','CV_Warpage','LBL_SinkMarks','SCA_PartWeight']]
 
@@ -119,41 +111,10 @@ new = np.dstack([turn_into_equal_long('DXP_Inj1PrsAct'),turn_into_equal_long('DX
 plt.plot(new[0,:,1])
 
 #%%
-np.save('data/injection_molding_train.npy', new)
+
+# DO NOT RUN!!!!
+# np.save('data/injection_molding_train.npy', new)
 # %%
 test = df[['CV_Warpage','LBL_SinkMarks','SCA_PartWeight']]
 # test.to_csv('data/injection_molding_test.csv',index=False)
 test.shape
-=======
-# df = df.loc[:,~df.columns.str.startswith('TCN')]
-# df = df.loc[:,~df.columns.str.startswith('MET')]
-# df = df.loc[:,~df.columns.str.startswith('TCE')]
-# df = df.loc[:,~df.columns.str.startswith('SIM')]
-# df = df.loc[:,~df.columns.str.startswith('LBL')]
-# df = df.loc[:,~df.columns.str.startswith('SET')]
-# df = df.loc[:,~df.columns.str.startswith('IR')] 
-# df = df.loc[:,~df.columns.str.startswith('CV')]
-# df = df.loc[:,~df.columns.str.startswith('DOS')]
-# df = df.loc[:,~df.columns.str.startswith('DRY')]
-# df = df.loc[:,~df.columns.str.startswith('E77')]
-# df = df.loc[:,~df.columns.str.startswith('ENV')]
-
-df['DXP_Inj1PrsAct']
-df['DXP_MldCavPrs1Act']
-
-df = df[['DXP_Inj1PrsAct','DXP_MldCavPrs1Act','CV_Warpage','LBL_SinkMarks','SCA_PartWeight']]
-import numpy as np 
-df[['DXP_Inj1PrsAct','DXP_MldCavPrs1Act']]
-
-list_thing = []
-for i in df['DXP_MldCavPrs1Act'].to_list():
-    list_thing.append(list(i))
-
-#%%
-values_found = []
-for i in list_thing:
-    values_found.append(len(i))
-
-import matplotlib.pyplot as plt 
-plt.plot(values_found)
->>>>>>> 637c5e2db32e17350cd0f4c7c5d1e4207efcaaf0

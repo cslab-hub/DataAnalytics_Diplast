@@ -7,6 +7,8 @@ from PIL import Image
 import matplotlib.pyplot as plt 
 import os
 import sys
+import matplotlib.dates as mdates
+
 # import seaborn as sns
 from statsmodels.tsa.stattools import grangercausalitytests
 
@@ -73,22 +75,62 @@ def return_feature_selection():
     st.markdown('''
     In the table above, we see the first 5 observations for every variable in the dataset. Based on this information, we can see the difference between the values for every variable and already make an asumption of the measurements that occurred in the dataset.
     ''')
-    
-    corr = dataset.corr().round(2)
-    corr.style.background_gradient(cmap='coolwarm')
-    st.table(corr.style.background_gradient(cmap='coolwarm')\
-    .format(precision=2)\
-    .set_table_styles([
-                    {"selector":"caption",
-                    "props":[("text-align","center")],
-                    }
+    option_list = [i for i in dataset.columns]
+    option7 = st.multiselect('Which variable could be removed from the dataset?',option_list)
+    if len(option7) == 0:
+        corr = dataset.corr().round(2)
+        corr.style.background_gradient(cmap='coolwarm')
+        st.table(corr.style.background_gradient(cmap='coolwarm')\
+        .format(precision=2)\
+        .set_table_styles([
+                        {"selector":"caption",
+                        "props":[("text-align","center")],
+                        }
 
-                    ], overwrite=False)\
+                        ], overwrite=False)\
+            
+
+            .set_caption('Table 2.'))
+
+        st.subheader('Interpet the correlations')
+        st.stop()
+
+    if len(option7) != 0:
+        dataset = dataset.drop(option7,axis=1)
+        corr = dataset.corr().round(2)
+        corr.style.background_gradient(cmap='coolwarm')
+        st.table(corr.style.background_gradient(cmap='coolwarm')\
+        .format(precision=2)\
+        .set_table_styles([
+                        {"selector":"caption",
+                        "props":[("text-align","center")],
+                        }
+
+                        ], overwrite=False)\
+            
+
+            .set_caption('Table 2.'))
+
+        st.subheader('Interpet the correlations')
+        # st.stop()
+
+
+
+    # corr = dataset.corr().round(2)
+    # corr.style.background_gradient(cmap='coolwarm')
+    # st.table(corr.style.background_gradient(cmap='coolwarm')\
+    # .format(precision=2)\
+    # .set_table_styles([
+    #                 {"selector":"caption",
+    #                 "props":[("text-align","center")],
+    #                 }
+
+    #                 ], overwrite=False)\
         
 
-        .set_caption('Table 2.'))
+    #     .set_caption('Table 2.'))
 
-    st.subheader('Interpet the correlations')
+    # st.subheader('Interpet the correlations')
 
     st.markdown('''
     In Table 2, we see the correlations between the variables. A red colored surface means a high positive correlation, A blue surface indicates a negative correlation. 
@@ -113,12 +155,12 @@ def return_feature_selection():
     X = dataset
     option_list = [i for i in X.columns]
     option_list.insert(0,'select something or keep all variables')
-    option = st.selectbox('Which variable resprents the target variable for the given dataset? We will separate this variable from the rest of the dataset ', option_list, key=1)
-    if option != 'select something or keep all variables':
-        X = X.drop(option, axis=1)
-    else:
-        pass
+    option2 = st.multiselect('Which variable resprents the target variable for the given dataset? We will separate this variable from the rest of the dataset',option_list)
+    if len(option2) == 0:
+        st.stop()
 
+    if len(option2) != 0:
+        X = X.drop(option2,axis=1)
 
     from sklearn.preprocessing import StandardScaler # for standardizing the Data
 
@@ -150,14 +192,59 @@ def return_feature_selection():
 
     with col1:
         
-
-        option2 = st.selectbox(
+        plot = pd.read_csv(option)
+        plot = plot.drop(option7,axis=1)
+        if 'TIME' in plot.columns:
+            print('yes we found it')
+            plot['TIME'] = pd.to_datetime(plot['TIME'])
+            plot.set_index('TIME', inplace=True)
+        # print(plot)
+        option4 = st.selectbox(
             'Which variable do you want to view?',
-            (i for i in sorted(set(most_important_names))), key=2)
+            (i for i in plot.columns), key=3)
+        # if option2 == "Select a Dataset":
+        #     st.stop()
 
+                    
+
+
+        # fig = plt.plot(plot[option2])
+        
         fig, ax = plt.subplots()
-        ax.plot(dataset[option2])
+        myFmt = mdates.DateFormatter("%H:%M:%S")
+
+        ax.xaxis.set_major_formatter(myFmt)
+        ax.plot(plot[option4])
         st.pyplot(fig)
+        
+        # st.pyplot(fig)
+        
+        
+        
+        
+        
+    with col2:
+        
+
+        plot = pd.read_csv(option)
+        plot = plot.drop(option7,axis=1)
+        
+        if 'TIME' in plot.columns:
+            print('yes we found it')
+            plot['TIME'] = pd.to_datetime(plot['TIME'])
+            plot.set_index('TIME', inplace=True)
+
+        option6 = st.selectbox(
+            'Which variable do you want to view?',
+            (i for i in plot.columns), key=5)
+        # fig = plt.plot(plot[option2])
+        
+        fig, ax = plt.subplots()
+        myFmt = mdates.DateFormatter("%H:%M:%S")
+        ax.xaxis.set_major_formatter(myFmt)
+        ax.plot(plot[option6])
+        st.pyplot(fig)
+
             
 
     

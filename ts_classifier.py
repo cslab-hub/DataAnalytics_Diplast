@@ -100,12 +100,27 @@ def return_classifier():
     Now that we've seen the data format, we will choose the target variable from the dataset in the box below:
     ''')
 
-    option2 = st.selectbox(
-        'Which variable resprents the labels for the given dataset? We will separate this variable from the rest of the dataset ', 
-        (i for i in dataset.columns), key=1)
-    target_data = dataset[option2]
-    dataset = dataset.drop(columns = [option2])
+    # option2 = st.selectbox(
+    #     'Which variable resprents the labels for the given dataset? We will separate this variable from the rest of the dataset ', 
+    #     (i for i in dataset.columns), key=1)
+    # target_data = dataset[option2]
+    # dataset = dataset.drop(columns = [option2])
 
+    option_list = [i for i in dataset.columns]
+    option2 = st.multiselect('Which variable resprents the target variable for the given dataset? We will separate this variable from the rest of the dataset',option_list)
+    if len(option2) == 0:
+        st.stop()
+
+    if len(option2) == 1:
+        target_data = dataset[option2]
+        dataset = dataset.drop(option2,axis=1)
+
+    if len(option2) > 1:
+        option_ifmore = st.selectbox(
+        'Which variable resprents the labels for the given dataset? We will separate this variable from the rest of the dataset ', 
+        (i for i in option2), key=1)
+        target_data = dataset[option_ifmore]
+        dataset = dataset.drop(option_ifmore,axis=1)
 
     st.markdown(f""" Now that we have identified which data we will use to classify the labels represented by {option2}, we can start to proceed with making a classifier. The next step is to choose the right classifier for the job.
     For this, we will give you some additional information for choosing the right classifier.

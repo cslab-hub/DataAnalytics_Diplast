@@ -75,8 +75,16 @@ def return_feature_selection():
     st.markdown('''
     In the table above, we see the first 5 observations for every variable in the dataset. Based on this information, we can see the difference between the values for every variable and already make an asumption of the measurements that occurred in the dataset.
     ''')
+    st.markdown('''
+    Now we visualize the correlations between the variables in the dataset. 
+    In Table 2, we see the correlations between the variables. A red colored surface means a high positive correlation, a blue surface indicates a negative correlation. 
+    On the diagonal we see a perfect red correlation of 1, which makes sense since we see this correlation exists between the same variable on both x and y-axis.    
+    Our advice: if we look at Table 2, we recommend that all variables that have a high correlation (≈ 0.9 or ≈ -0.9 and above) can be removed from the dataset. With the selector below, you are able to remove variables to see how this influences correlations.
+    ''')
+
     option_list = [i for i in dataset.columns]
     option7 = st.multiselect('Which variable could be removed from the dataset?',option_list)
+
     if len(option7) == 0:
         corr = dataset.corr().round(2)
         corr.style.background_gradient(cmap='coolwarm')
@@ -92,8 +100,8 @@ def return_feature_selection():
 
             .set_caption('Table 2.'))
 
-        st.subheader('Interpet the correlations')
-        st.stop()
+        # st.subheader('Interpet the correlations')
+        # st.stop()
 
     if len(option7) != 0:
         dataset = dataset.drop(option7,axis=1)
@@ -111,7 +119,7 @@ def return_feature_selection():
 
             .set_caption('Table 2.'))
 
-        st.subheader('Interpet the correlations')
+    # st.subheader('Interpet the correlations')
         # st.stop()
 
 
@@ -132,12 +140,12 @@ def return_feature_selection():
 
     # st.subheader('Interpet the correlations')
 
-    st.markdown('''
-    In Table 2, we see the correlations between the variables. A red colored surface means a high positive correlation, A blue surface indicates a negative correlation. 
-    On the diagonal we see a perfect red correlation of 1, which makes sense since we see this correlation exists between the same variable on both x and y-axis.
+    # st.markdown('''
+    # In Table 2, we see the correlations between the variables. A red colored surface means a high positive correlation, A blue surface indicates a negative correlation. 
+    # On the diagonal we see a perfect red correlation of 1, which makes sense since we see this correlation exists between the same variable on both x and y-axis.
     
-    Our advice: if we look at Table 2, we recommend that all variables that have a high correlation (≈ 0.9 or ≈ -0.9 and above) can be removed from the dataset.
-    ''')
+    # Our advice: if we look at Table 2, we recommend that all variables that have a high correlation (≈ 0.9 or ≈ -0.9 and above) can be removed from the dataset.
+    # ''')
 
     st.header('Principal Component Analysis')
     st.markdown('''
@@ -155,9 +163,9 @@ def return_feature_selection():
     X = dataset
     option_list = [i for i in X.columns]
     option_list.insert(0,'select something or keep all variables')
-    option2 = st.multiselect('Which variable resprents the target variable for the given dataset? We will separate this variable from the rest of the dataset',option_list)
-    if len(option2) == 0:
-        st.stop()
+    option2 = st.multiselect('If your dataset contains Target variable(s), which are/is it? We will separate these from the rest of the dataset',option_list)
+    # if len(option2) == 0:
+        # st.stop()
 
     if len(option2) != 0:
         X = X.drop(option2,axis=1)
@@ -211,9 +219,8 @@ def return_feature_selection():
         # fig = plt.plot(plot[option2])
         
         fig, ax = plt.subplots()
-        myFmt = mdates.DateFormatter("%H:%M:%S")
-
-        ax.xaxis.set_major_formatter(myFmt)
+        # myFmt = mdates.DateFormatter("%H:%M:%S")
+        # ax.xaxis.set_major_formatter(myFmt)
         ax.plot(plot[option4])
         st.pyplot(fig)
         
@@ -240,8 +247,8 @@ def return_feature_selection():
         # fig = plt.plot(plot[option2])
         
         fig, ax = plt.subplots()
-        myFmt = mdates.DateFormatter("%H:%M:%S")
-        ax.xaxis.set_major_formatter(myFmt)
+        # myFmt = mdates.DateFormatter("%H:%M:%S")
+        # ax.xaxis.set_major_formatter(myFmt)
         ax.plot(plot[option6])
         st.pyplot(fig)
 

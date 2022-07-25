@@ -74,9 +74,8 @@ def return_comparison():
         # fig = plt.plot(plot[option2])
         
         fig, ax = plt.subplots()
-        myFmt = mdates.DateFormatter("%H:%M:%S")
-
-        ax.xaxis.set_major_formatter(myFmt)
+        # myFmt = mdates.DateFormatter("%H:%M:%S")
+        # ax.xaxis.set_major_formatter(myFmt)
         ax.plot(plot[option2])
         st.pyplot(fig)
         
@@ -103,7 +102,7 @@ def return_comparison():
         # fig = plt.plot(plot[option2])
         
         fig, ax = plt.subplots()
-        myFmt = mdates.DateFormatter("%H:%M:%S")
-        ax.xaxis.set_major_formatter(myFmt)
+        # myFmt = mdates.DateFormatter("%H:%M:%S")
+        # ax.xaxis.set_major_formatter(myFmt)
         ax.plot(plot[option4])
         st.pyplot(fig)

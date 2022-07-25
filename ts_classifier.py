@@ -126,12 +126,16 @@ def return_classifier():
     For this, we will give you some additional information for choosing the right classifier.
 
     To get a general idea of what a classifier can do, we give you the option to choose between several algorithms:
-    - Decision Tree
-    - Random Forest
-    - Logistic Regression
-    - Random Forest Regressor (for Continuous target variables)
-
-    
+    - Decision Tree (Categorical)
+    - Random Forest (Categorical)
+    - Logistic Regression (Categorical)
+    - Random Forest Regressor (Continuous)
+                
+    The first three options are Algorithms that are used for Categorical variables.
+    Categorical variables are variables that can take on one of a limited set of values, belonging to a particular group.
+    For example, types of plastic used: PP, PET etc.
+    Continuous variables are variables that are obtained by measuring or counting something, and can therefore take on all real values.
+    Examples are the pressure and temperature in an extruder machine. 
                 """) 
 
     option3 = st.selectbox(

@@ -12,7 +12,10 @@ def return_homepage():
     st.header('Welcome to the Data Analytics Tool')
     st.markdown(
         """
-        #### The Data Analytics tool consists of several modules that analyse parts of your dataset. It is of great importance that the data used in this tool is properly validated. For validating the data, we advise you to check our data validation tool that can be accessed [here](https://share.streamlit.io/cslab-hub/data_validation_diplast/main/main.py) 
+        #### This dashboard is developed by the Jheronimus Academy of Data Science (JADS) and Osnabrück University (UOS). More information on the Di-Plast project can be found [here](https://www.nweurope.eu/projects/project-search/di-plast-digital-circular-economy-for-the-plastics-industry/). For information on this dedicated tool, we advise reading our [wiki](https://di-plast.sis.cs.uos.de/Wiki.jsp?page=Data%20Analytics) page containing all the necessary information for installation and interpretation.
+
+        ##### The Data Analytics tool consists of several modules that analyse parts of your dataset. It is of great importance that the data used in this tool is properly validated. For validating the data, we advise you to check our data validation tool that can be accessed [here](https://share.streamlit.io/cslab-hub/data_validation_diplast/main/main.py).
+
         #### **👈 Select a tool from the dropdown menu on the left**""")
     
 

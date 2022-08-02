@@ -6,7 +6,7 @@ import numpy as np
 from PIL import Image 
 
 from home import *
-from matrix_profile import *
+# from matrix_profile import *
 from comparison import *
 from data_inspection import *
 # from forecast import *

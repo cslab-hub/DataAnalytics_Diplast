@@ -1,4 +1,4 @@
 echo "Started the process"
-call conda activate removethis
+call conda activate data_analytics
 call streamlit run main.py
 cmd /k

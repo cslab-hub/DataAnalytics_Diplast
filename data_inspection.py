@@ -37,7 +37,7 @@ def return_preprocessing():
 
     st.header('First inspect your data')
     st.markdown("""
-        While the data should have already been checked with the tips from the Data Validation tool, we should again check if indeed our data now is correct.
+        While the data should have already been checked with the tips from the Data Validation [tool](https://cslab-hub-data-validation-main-bx6ggw.streamlitapp.com/), we should again check if indeed our data now is correct.
         In the following dropdown box, select the dataset that you want to view.
         This dataset should be put into the data folder where this software runs from.
     """)

@@ -93,7 +93,7 @@ def return_EPA():
 
     st.markdown("""
     Here you should see the time variable as the first column on the left.
-    IF NOT, go back a few steps and check the data validation tool again, or inspect your dataset.
+    IF NOT, go back a few steps and check the data validation tool again [here](https://cslab-hub-data-validation-main-bx6ggw.streamlitapp.com/), or inspect your dataset.
     The first variable should be a timestamp variable that acts as an unique identifier of each row/observation.
     """)
     st.table(dataset_production.head(5))

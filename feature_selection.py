@@ -10,7 +10,6 @@ import sys
 import matplotlib.dates as mdates
 
 # import seaborn as sns
-from statsmodels.tsa.stattools import grangercausalitytests
 
 #%%
 

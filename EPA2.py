@@ -534,44 +534,44 @@ def return_EPA():
 
     st.download_button('Save boxplots', img_bytes, file_name="{}_boxplots.png".format(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")), mime="image/png")
 
-    # st.markdown(
-    # '''
-    # ## Overlap between patterns
+    st.markdown(
+    '''
+    ## Overlap between patterns
 
-    # In this visualisation, patterns are connected to each other by how much their members overlap. 
-    # If two patterns select similar subsets of data (also called having similar 'subgroups'), 
-    # then they have a strong link between them and appear closer together. 
-    # Overall, this visualisation takes the form of a network diagram. 
-    # '''
-    # )
+    In this visualisation, patterns are connected to each other by how much their members overlap. 
+    If two patterns select similar subsets of data (also called having similar 'subgroups'), 
+    then they have a strong link between them and appear closer together. 
+    Overall, this visualisation takes the form of a network diagram. 
+    '''
+    )
 
-    # edges_threshold = st.slider("Only draw edges when overlap is greater than: ", 0.0, 1.0, 0.25)
+    edges_threshold = st.slider("Only draw edges when overlap is greater than: ", 0.0, 1.0, 0.25)
 
-    # @st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
-    # def get_jaccard_plot():
+    @st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
+    def get_jaccard_plot():
 
-    #     fig = plt.figure(dpi=150)
+        fig = plt.figure(dpi=150)
 
-    #     sd4py_extra.jaccard_visualisation(subgroups_selection, 
-    #                                         dataset_production, 
-    #                                         edges_threshold, 
-    #                                         labels=labels)
+        sd4py_extra.jaccard_visualisation(subgroups_selection, 
+                                            dataset_production, 
+                                            edges_threshold, 
+                                            labels=labels)
 
-    #     fig.set_size_inches(20,9)
-    #     plt.margins(x=0.15)
-    #     plt.gca().set_frame_on(False)
-    #     plt.gca().set_title('Jaccard Similarity Between Subgroups', fontsize=14)
-    #     fig.tight_layout()
+        fig.set_size_inches(20,9)
+        plt.margins(x=0.15)
+        plt.gca().set_frame_on(False)
+        plt.gca().set_title('Jaccard Similarity Between Subgroups', fontsize=14)
+        fig.tight_layout()
 
-    #     ## Convert to image to display 
+        ## Convert to image to display 
 
-    #     return get_img_array_bytes(fig)
+        return get_img_array_bytes(fig)
 
-    # img_arr, img_bytes = get_jaccard_plot()
+    img_arr, img_bytes = get_jaccard_plot()
 
-    # st.image(img_arr)
+    st.image(img_arr)
 
-    # st.download_button('Save network diagram', img_bytes, file_name="{}_network_diagram.png".format(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")), mime="image/png")
+    st.download_button('Save network diagram', img_bytes, file_name="{}_network_diagram.png".format(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")), mime="image/png")
 
     st.markdown(
     '''

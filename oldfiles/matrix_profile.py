@@ -5,7 +5,6 @@ from PIL import Image
 import pathlib
 
 import os 
-import stumpy
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt 

@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt 
 import sys
+import datetime
 
 if sys.platform == 'win32':
     string_splitter = '\\'
@@ -50,7 +51,12 @@ def return_preprocessing():
         st.stop()
     
     dataset = pd.read_csv(option)
-
+    if 'Date' in dataset.columns:
+        dataset['Date'] = pd.to_datetime(dataset['Date'])
+        dataset = dataset.set_index('Date')
+    if 'TIME' in dataset.columns:
+        dataset['TIME'] = pd.to_datetime(dataset['TIME'])
+        dataset = dataset.set_index('TIME')
 
     st.write("""
         The dataset below shows the first 10 inputs. Based on this information, you are able to see the general outline of the dataset, e.g., the amount of columns and some values. 

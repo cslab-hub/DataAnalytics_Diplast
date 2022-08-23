@@ -95,14 +95,20 @@ def return_EPA():
 
                         pet_all_measurements.append(label)
 
-            data['recycled'] = data['recycled'].astype(bool)
+            # data['recycled'] = data['recycled'].astype(bool)
                         
-            data = data[pet_all_measurements].join(data[['PK5.Aussenluft.Feuchte_2_OG','PK5.Aussenluft.Temperatur_2_OG','spit','recycled']])
+            # data = data[pet_all_measurements].join(data[['PK5.Aussenluft.Feuchte_2_OG','PK5.Aussenluft.Temperatur_2_OG','spit','recycled']])
+
+ 
         
         return data
     
 
     dataset_production = get_data()
+
+    
+    print('we actually got here')
+
     n_rows = dataset_production.shape[0]
     number_of_rows = st.slider('How many observations do you want to investigate?', 0, n_rows, int(n_rows/10))
     # dataset_production = dataset_production.groupby('label').apply(lambda x: x.sample(n=number_of_rows)).reset_index(drop = True)

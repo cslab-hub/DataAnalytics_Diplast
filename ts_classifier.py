@@ -95,9 +95,16 @@ def return_classifier():
     In the table above, we see the first 5 observations for every variable in the dataset. Based on this information, we can see the difference between the values for every variable and already make an asumption of the measurements that occurred in the dataset. Also, we might be able to identify the target variable.
     ''')
 
-    st.subheader('Target variable selection')
     st.markdown('''
     Now that we've seen the data format, we will choose the target variable from the dataset in the box below:
+    ''')
+    remove_option_list = [i for i in dataset.columns]
+    to_be_removed = st.multiselect('Which variable could be removed from the dataset?',remove_option_list)
+    dataset = dataset.drop(to_be_removed,axis=1)
+
+    st.subheader('Target variable selection')
+    st.markdown('''
+    Now that we've seen the data format and removed unwanted variables, we will choose the target variable from the dataset in the box below:
     ''')
 
     # option2 = st.selectbox(

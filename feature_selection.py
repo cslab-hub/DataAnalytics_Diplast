@@ -34,6 +34,13 @@ data = data_loader()
 data.insert(0,'Select a Dataset')
 
 def return_feature_selection():
+    st.markdown("""
+        <style>
+        .css-15zrgzn {display: none}
+        .css-eczf16 {display: none}
+        .css-jn99sy {display: none}
+        </style>
+        """, unsafe_allow_html=True)
     st.header('Create Correlation plots')
 
     st.markdown("""Correlation is a statistical term which refers to how close two variables have a linear relationship to each other.
@@ -277,90 +284,20 @@ def return_feature_selection():
 
             
 
-    # with col1:
-        
-    #     plot = pd.read_csv(option)
-    #     plot = plot.drop(option7,axis=1)
-    #     plot = plot.drop(option2,axis=1)
-
-    #     if 'Date' in plot.columns:
-    #         # print('yes we found it')
-    #         plot['Date'] = pd.to_datetime(plot['Date'])
-    #         plot.set_index('Date', inplace=True)
-    #     # print(plot)
-    #     option4 = st.selectbox(
-    #         'Which variable do you want to view?',
-    #         (i for i in plot.columns), key=3)
-    #     # if option2 == "Select a Dataset":
-    #     #     st.stop()
-
-    #     option_daterange = st.selectbox(
-    #         'What daterange does your data have?',
-    #         # ['Select dataset',(i for i in data)], format_func= lambda x:  str(x).split('/')[-1], key=1)
-
-    #         (i for i in ['minutes','hours','days']), key=20)
-
-
-    #     # fig = plt.plot(plot[option2])
-        
-    #     fig, ax = plt.subplots()
-    #     if option_daterange == 'minutes':
-    #         myFmt = mdates.DateFormatter("%H:%M:%S")
-    #         ax.xaxis.set_major_formatter(myFmt)
-    #         ax.plot(plot[option4])
-    #     if option_daterange == 'hours':
-    #         myFmt = mdates.DateFormatter("%H:%M")
-    #         ax.xaxis.set_major_formatter(myFmt)
-    #         ax.plot(plot[option4])
-    #     if option_daterange == 'days':
-    #         myFmt = mdates.DateFormatter("%D")
-    #         ax.xaxis.set_major_formatter(myFmt)
-    #         ax.plot(plot[option4])
-    #     st.pyplot(fig)
-        
-    #     # st.pyplot(fig)
-        
-        
-        
-        
-        
-    # with col2:
-
-    #     plot = pd.read_csv(option)
-    #     plot = plot.drop(option7,axis=1)
-    #     plot = plot.drop(option2,axis=1)
-
-        
-    #     if 'Date' in plot.columns:
-    #         # print('yes we found it')
-    #         plot['Date'] = pd.to_datetime(plot['Date'])
-    #         plot.set_index('Date', inplace=True)
-
-    #     option6 = st.selectbox(
-    #         'Which variable do you want to view?',
-    #         (i for i in plot.columns), key=5)
-    #     # fig = plt.plot(plot[option2])
-        
-    #     option_daterange = st.selectbox(
-    #         'What daterange does your data have?',
-    #         # ['Select dataset',(i for i in data)], format_func= lambda x:  str(x).split('/')[-1], key=1)
-
-    #         (i for i in ['minutes','hours','days']), key=10)
-    #     fig, ax = plt.subplots()
-    #     if option_daterange == 'minutes':
-    #         myFmt = mdates.DateFormatter("%H:%M:%S")
-    #         ax.xaxis.set_major_formatter(myFmt)
-    #         ax.plot(plot[option6])
-    #     if option_daterange == 'hours':
-    #         myFmt = mdates.DateFormatter("%H:%M")
-    #         ax.xaxis.set_major_formatter(myFmt)
-    #         ax.plot(plot[option6])
-    #     if option_daterange == 'days':
-    #         myFmt = mdates.DateFormatter("%D")
-    #         ax.xaxis.set_major_formatter(myFmt)
-    #         ax.plot(plot[option6])
-    #     st.pyplot(fig)
-
-            
+    
+    st.markdown("""
+    There is now the possiblity to download the final dataset for further analysis, you can then put the file in the 'data' folder again to use it.
+    """)
+    @st.cache
+    def convert_df(df):
+        # IMPORTANT: Cache the conversion to prevent computation on every rerun
+        return dataset.to_csv().encode('utf-8')
+    csv = convert_df(dataset)
+    st.download_button(
+        label="Download data as CSV",
+        data=csv,
+        file_name='data/preprocessed.csv',
+        mime='text/csv',
+    )
 
     

@@ -33,6 +33,13 @@ data.insert(0,'Select a Dataset')
 
 # print(data)
 def return_report():
+    st.markdown("""
+        <style>
+        .css-15zrgzn {display: none}
+        .css-eczf16 {display: none}
+        .css-jn99sy {display: none}
+        </style>
+        """, unsafe_allow_html=True)
     st.header('Data Report')
     st.markdown("""The final module of our tool provides a general overview of your dataset for every specific variable.
     This overview gives you a variety of insights such as alerts in the data, a histogram that shows the distribution of values and also the 5 most common and most extreme values.

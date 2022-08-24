@@ -23,7 +23,7 @@ def data_loader():
     for roots, dirs, files in sorted(os.walk(cwd)):
         for filename in sorted(files):
             if filename.endswith(".csv"):
-                print(filename)
+                # print(filename)
                 # data = pd.read_csv(os.path.join(roots,filename))
                 found_files.append(os.path.join(roots,filename))
     return found_files,cwd
@@ -46,7 +46,7 @@ def return_report():
     if option == 'Select a Dataset':
         st.stop()
     dataset = pd.read_csv(option)
-    print(dataset.dtypes)
+    # print(dataset.dtypes)
 
     st.write('You selected:', option)
     # dataset = dataset.select_dtypes('float64')

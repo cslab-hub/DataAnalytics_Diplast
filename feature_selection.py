@@ -25,7 +25,7 @@ def data_loader():
     for roots, dirs, files in sorted(os.walk(cwd)):
         for filename in sorted(files):
             if filename.endswith(".csv"):
-                print(filename)
+                # print(filename)
                 # data = pd.read_csv(os.path.join(roots,filename))
                 found_files.append(os.path.join(roots,filename))
     return found_files
@@ -58,7 +58,7 @@ def return_feature_selection():
 
     dataset = dataset.select_dtypes(include=numerics)
 
-    st.table(dataset.head(5).style.format(precision=2)\
+    st.dataframe(dataset.head(5).style.format(precision=2)\
     .set_table_styles([
                     {"selector":"caption",
                     "props":[("text-align","center")],
@@ -87,7 +87,7 @@ def return_feature_selection():
     if len(option7) == 0:
         corr = dataset.corr().round(2)
         corr.style.background_gradient(cmap='coolwarm')
-        st.table(corr.style.background_gradient(cmap='coolwarm')\
+        st.dataframe(corr.style.background_gradient(cmap='coolwarm')\
         .format(precision=2)\
         .set_table_styles([
                         {"selector":"caption",
@@ -106,7 +106,7 @@ def return_feature_selection():
         dataset = dataset.drop(option7,axis=1)
         corr = dataset.corr().round(2)
         corr.style.background_gradient(cmap='coolwarm')
-        st.table(corr.style.background_gradient(cmap='coolwarm')\
+        st.dataframe(corr.style.background_gradient(cmap='coolwarm')\
         .format(precision=2)\
         .set_table_styles([
                         {"selector":"caption",
@@ -201,10 +201,9 @@ def return_feature_selection():
         
         plot = pd.read_csv(option)
         plot = plot.drop(option7,axis=1)
-        if 'Date' in plot.columns:
-            print('yes we found it')
-            plot['Date'] = pd.to_datetime(plot['Date'])
-            plot.set_index('Date', inplace=True)
+        if 'Time' in plot.columns:
+            plot['Time'] = pd.to_datetime(plot['Time'])
+            plot.set_index('Time', inplace=True)
         # print(plot)
         option4 = st.selectbox(
             'Which variable do you want to view?',
@@ -247,10 +246,9 @@ def return_feature_selection():
         plot = pd.read_csv(option)
         plot = plot.drop(option7,axis=1)
         
-        if 'Date' in plot.columns:
-            print('yes we found it')
-            plot['Date'] = pd.to_datetime(plot['Date'])
-            plot.set_index('Date', inplace=True)
+        if 'Time' in plot.columns:
+            plot['Time'] = pd.to_datetime(plot['Time'])
+            plot.set_index('Time', inplace=True)
 
         option6 = st.selectbox(
             'Which variable do you want to view?',
@@ -276,6 +274,92 @@ def return_feature_selection():
             ax.xaxis.set_major_formatter(myFmt)
             ax.plot(plot[option6])
         st.pyplot(fig)
+
+            
+
+    # with col1:
+        
+    #     plot = pd.read_csv(option)
+    #     plot = plot.drop(option7,axis=1)
+    #     plot = plot.drop(option2,axis=1)
+
+    #     if 'Date' in plot.columns:
+    #         # print('yes we found it')
+    #         plot['Date'] = pd.to_datetime(plot['Date'])
+    #         plot.set_index('Date', inplace=True)
+    #     # print(plot)
+    #     option4 = st.selectbox(
+    #         'Which variable do you want to view?',
+    #         (i for i in plot.columns), key=3)
+    #     # if option2 == "Select a Dataset":
+    #     #     st.stop()
+
+    #     option_daterange = st.selectbox(
+    #         'What daterange does your data have?',
+    #         # ['Select dataset',(i for i in data)], format_func= lambda x:  str(x).split('/')[-1], key=1)
+
+    #         (i for i in ['minutes','hours','days']), key=20)
+
+
+    #     # fig = plt.plot(plot[option2])
+        
+    #     fig, ax = plt.subplots()
+    #     if option_daterange == 'minutes':
+    #         myFmt = mdates.DateFormatter("%H:%M:%S")
+    #         ax.xaxis.set_major_formatter(myFmt)
+    #         ax.plot(plot[option4])
+    #     if option_daterange == 'hours':
+    #         myFmt = mdates.DateFormatter("%H:%M")
+    #         ax.xaxis.set_major_formatter(myFmt)
+    #         ax.plot(plot[option4])
+    #     if option_daterange == 'days':
+    #         myFmt = mdates.DateFormatter("%D")
+    #         ax.xaxis.set_major_formatter(myFmt)
+    #         ax.plot(plot[option4])
+    #     st.pyplot(fig)
+        
+    #     # st.pyplot(fig)
+        
+        
+        
+        
+        
+    # with col2:
+
+    #     plot = pd.read_csv(option)
+    #     plot = plot.drop(option7,axis=1)
+    #     plot = plot.drop(option2,axis=1)
+
+        
+    #     if 'Date' in plot.columns:
+    #         # print('yes we found it')
+    #         plot['Date'] = pd.to_datetime(plot['Date'])
+    #         plot.set_index('Date', inplace=True)
+
+    #     option6 = st.selectbox(
+    #         'Which variable do you want to view?',
+    #         (i for i in plot.columns), key=5)
+    #     # fig = plt.plot(plot[option2])
+        
+    #     option_daterange = st.selectbox(
+    #         'What daterange does your data have?',
+    #         # ['Select dataset',(i for i in data)], format_func= lambda x:  str(x).split('/')[-1], key=1)
+
+    #         (i for i in ['minutes','hours','days']), key=10)
+    #     fig, ax = plt.subplots()
+    #     if option_daterange == 'minutes':
+    #         myFmt = mdates.DateFormatter("%H:%M:%S")
+    #         ax.xaxis.set_major_formatter(myFmt)
+    #         ax.plot(plot[option6])
+    #     if option_daterange == 'hours':
+    #         myFmt = mdates.DateFormatter("%H:%M")
+    #         ax.xaxis.set_major_formatter(myFmt)
+    #         ax.plot(plot[option6])
+    #     if option_daterange == 'days':
+    #         myFmt = mdates.DateFormatter("%D")
+    #         ax.xaxis.set_major_formatter(myFmt)
+    #         ax.plot(plot[option6])
+    #     st.pyplot(fig)
 
             
 

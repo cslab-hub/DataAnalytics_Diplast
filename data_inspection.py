@@ -23,11 +23,11 @@ def data_loader():
     for roots, dirs, files in sorted(os.walk(cwd)):
         for filename in sorted(files):
             if filename.endswith(".csv"):
-                print(filename)
+                # print(filename)
                 # data = pd.read_csv(os.path.join(roots,filename))
                 found_files.append(os.path.join(roots,filename))
-                print(found_files)
-                print(sys.platform)
+                # print(found_files)
+                # print(sys.platform)
     return found_files
 
 data = data_loader()
@@ -42,7 +42,42 @@ def return_preprocessing():
         This dataset should be put into the data folder where this software runs from.
     """)
 
+    st.markdown("""
+    A good dataset is:
+    - In the CSV format (Comma Separated Values) 
+    - Has as first column a Date, which we wel automatically use as an index.
+    - Does not contain too many variables (keep it below 20)
 
+    Example of a good dataset:
+    """)
+
+
+    st.write(pd.DataFrame({
+        'Time': ['21-12-21 10:00:00', '21-12-21 10:00:01','21-12-21 10:00:02','21-12-21 10:00:03'],
+        'Sensor1': [10, 10, 11, 10],
+        'Sensor2': [14,15,14,14],
+        'Sensor3': [100.1,100.3,100.2,100.0],
+        'Sensor4': [90.1,89.4,88.3,90]
+    }).style.set_table_styles([
+                {"selector":"caption",
+                "props":[("text-align","center"),("caption-side","top")],
+                },                
+                {"selector":"td",
+                "props":[("text-align","center")],
+                },
+                {"selector":"",
+                "props":[("margin-left","auto"),("margin-right","auto")],
+                }
+
+                ]).set_caption("Table 1: Dataset.")\
+                .format(precision=2)\
+                .hide(axis='index')\
+                .to_html()           
+                , unsafe_allow_html=True)
+    st.write("")
+    st.markdown("""
+    For more information, we advise you to check our data validation tool that can be accessed [here](https://cslab-hub-data-validation-main-bx6ggw.streamlitapp.com/)
+    """)
     option = st.selectbox(
         'Which dataset do you want to view?',
         (i for i in data), format_func= lambda x:  str(x).split(string_splitter)[-1], key=1)
@@ -50,17 +85,18 @@ def return_preprocessing():
         st.stop()
     
     dataset = pd.read_csv(option)
-    if 'Date' in dataset.columns:
-        dataset['Date'] = pd.to_datetime(dataset['Date'])
-        dataset = dataset.set_index('Date')
+    if 'Time' in dataset.columns:
+        dataset['Time'] = pd.to_datetime(dataset['Time'])
+        dataset = dataset.set_index('Time')
     if 'TIME' in dataset.columns:
         dataset['TIME'] = pd.to_datetime(dataset['TIME'])
         dataset = dataset.set_index('TIME')
 
     st.write("""
-        The dataset below shows the first 10 inputs. Based on this information, you are able to see the general outline of the dataset, e.g., the amount of columns and some values. 
+        The dataset below shows the first 10 inputs. Based on this information, you are able to see the general outline of the dataset, e.g., the amount of columns and some values.
         """)
-    st.table(dataset.head(10))
+    st.success('Tip: Hold shift while scroling to see all variables!')
+    st.dataframe(dataset.head(10))
     st.write(f'The dataset contains a total of {len(dataset)} rows and {len(dataset.columns)} columns.')
     dtype_df = dataset.dtypes.value_counts().reset_index()
 

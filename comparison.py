@@ -28,11 +28,11 @@ def data_loader():
     for roots, dirs, files in sorted(os.walk(cwd)):
         for filename in sorted(files):
             if filename.endswith(".csv"):
-                print(filename)
+                # print(filename)
                 # data = pd.read_csv(os.path.join(roots,filename))
                 found_files.append(os.path.join(roots,filename))
-                print(found_files)
-                print(sys.platform)
+                # print(found_files)
+                # print(sys.platform)
     return found_files
 
 data = data_loader()
@@ -42,7 +42,8 @@ def return_comparison():
     st.header('Compare two time series')
     st.markdown("""
         To check what happened within every individual time serie and to compare them with each other, we can plot them on this tab and see what happened throughout the process.
-
+        You can also select the detail of the x-axis in both plots, because some datasets can be measured every minute, hour or day.
+        Therefore, the daterange selection-box provides an minute, hours and day (format (month/day/year)) view.
         """)
     col1, col2 = st.columns(2)
 
@@ -63,10 +64,10 @@ def return_comparison():
         #     st.stop()
         plot = pd.read_csv(option)
 
-        if 'Date' in plot.columns:
-            print('yes we found it')
-            plot['Date'] = pd.to_datetime(plot['Date'])
-            plot.set_index('Date', inplace=True)
+        if 'Time' in plot.columns:
+            # print('yes we found it')
+            plot['Time'] = pd.to_datetime(plot['Time'])
+            plot.set_index('Time', inplace=True)
         # print(plot)
         option2 = st.selectbox(
             'Which variable do you want to view?',
@@ -113,10 +114,10 @@ def return_comparison():
 
             (i for i in ['minutes','hours','days']), key=20)
         plot = pd.read_csv(option3)
-        if 'Date' in plot.columns:
-            print('yes we found it')
-            plot['Date'] = pd.to_datetime(plot['Date'])
-            plot.set_index('Date', inplace=True)
+        if 'Time' in plot.columns:
+            # print('yes we found it')
+            plot['Time'] = pd.to_datetime(plot['Time'])
+            plot.set_index('Time', inplace=True)
 
         option4 = st.selectbox(
             'Which variable do you want to view?',

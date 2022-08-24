@@ -18,7 +18,7 @@ def data_loader():
     found_files = []
     cwd = os.getcwd()    
     cwd = cwd+'/data/preprocessed'
-    print(cwd)
+    # print(cwd)
     for roots, dirs, files in sorted(os.walk(cwd)):
         for filename in sorted(files):
             if filename.endswith(".csv"):

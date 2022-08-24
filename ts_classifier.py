@@ -51,7 +51,7 @@ def data_loader():
     for roots, dirs, files in sorted(os.walk(cwd)):
         for filename in sorted(files):
             if filename.endswith(".csv"):
-                print(filename)
+                # print(filename)
                 found_files.append(os.path.join(roots,filename))
     return found_files
 
@@ -89,13 +89,13 @@ def return_classifier():
         st.stop()
     dataset = pd.read_csv(option)
 
-    st.table( dataset.head(5))
+    st.dataframe( dataset.head(5))
     st.markdown('''
     In the table above, we see the first 5 observations for every variable in the dataset. Based on this information, we can see the difference between the values for every variable and already make an asumption of the measurements that occurred in the dataset. Also, we might be able to identify the target variable.
     ''')
 
     st.markdown('''
-    Now that we've seen the data format, we will choose the target variable from the dataset in the box below:
+    Now that we've seen the data format, we will remove variables from the dataset in the box below, if necessary:
     ''')
     remove_option_list = [i for i in dataset.columns]
     to_be_removed = st.multiselect('Which variable could be removed from the dataset?',remove_option_list)
@@ -127,6 +127,8 @@ def return_classifier():
         (i for i in option2), key=1)
         target_data = dataset[option_ifmore]
         dataset = dataset.drop(option_ifmore,axis=1)
+        dataset = dataset.drop([item for item in option2 if item not in option_ifmore],axis=1)
+
 
     st.markdown(f""" Now that we have identified which data we will use to classify the labels represented by {option2}, we can start to proceed with making a classifier. The next step is to choose the right classifier for the job.
     For this, we will give you some additional information for choosing the right classifier.
@@ -187,7 +189,7 @@ def return_classifier():
         if option3 != 'Logistic Regression':
 
             feature_importance = cv_classifier.best_estimator_.feature_importances_
-            print(feature_importance)
+            # print(feature_importance)
             f_i = list(zip(features_dataset,feature_importance)) 
             f_i.sort(key = lambda x : x[1])
             fig2, ax2 = plt.subplots()

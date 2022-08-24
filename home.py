@@ -44,6 +44,14 @@ def return_homepage():
     st.markdown(
         """
         ##### The Data Analytics tool consists of several modules that analyse parts of your dataset. It is of great importance that the data used in this tool is properly validated. For validating the data, we advise you to check our data validation tool that can be accessed [here](https://cslab-hub-data-validation-main-bx6ggw.streamlitapp.com/).
+        ####  The tools are:
+        ######  - Data Inspection: Inspect your data to check if it is in the right format, and that the right variables are there. 
+        ######  - Data Comparison: Use this module to compare the measurements of the same variable/sensor on two different datasets.
+        ######  - Feature Selection: Reduce the size of your dataset by spotting unneccesary variables, but also by spotting the important ones!
+        ######  - Classifier: If you have thing you want to predict in your dataset, use this module to predict classes or numerical values. For example, predict if this product is of bad quality.
+        ######  - Exploratory Pattern Analytics: Explore your dataset by finding interesting patterns in your data. 
+        ######  - Final Data Report: a downloadable HTML-form with all sorts of information about your dataset.
+        
         ##### **👈 Select a tool from the dropdown menu on the left.**""")
     
 

@@ -158,6 +158,9 @@ def return_feature_selection():
     Another method to reduce the amount of variables in your dataset (e.g., dimensionality reduction) is by performing Principal Component Analysis (PCA). 
     This technique uses a set of large variables by combining them together to retain as much as information as possible.
     PCA dates back to the 1990's and is one of the most widely used analysis techniques in Data Science.
+    The module will determine a list with variables where the most important variable is on the top followed by variables with decreasing importance.
+    However, keep in mind that variable could be 'so heavy' in terms of importance, that is not logical to keep it in the dataset. 
+    Therefore, try to interpret if a specific variable is not too informative, because that could mean that it is so trivial that you actually would want to remove it from the dataset entirely.
     
     Let's see what PCA can tell us about the dataset. For this, we can choose to use all variables. However, if there is a clear target variable. For example, the class that you want to predict.
     We recommend to remove this one from the dataset. You can choose your preference for this in the box below:

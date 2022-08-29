@@ -105,24 +105,34 @@ def return_preprocessing():
     st.success('Tip: Hold shift while scroling to see all variables!')
     st.dataframe(dataset.head(10))
     st.write(f'The dataset contains a total of {len(dataset)} rows and {len(dataset.columns)} columns.')
+
+    st.markdown(""" ## Data Types""")
     dtype_df = dataset.dtypes.value_counts().reset_index()
 
     dtype_df.columns = ['VariableType','Count']
     dtype_df['VariableType'] = dtype_df['VariableType'].astype(str)
 
     fig, ax = plt.subplots()
-    fig.set_size_inches(7,5)
+    fig.set_size_inches(5,3)
     ax.bar(dtype_df['VariableType'],dtype_df['Count'])
     
     st.write("""
         The plot below indicates which datatypes are in the dataset, based on the different columns (variables). The barplot shows the different datatypes and how many of these columns are spotted in the dataset.
         """)
+    st.markdown("""
+    These are the datatypes that are common in industrial data:
+    - float32, float64, int32, int64: Numbers
+    - String (str), objects, datetimes: Words, Categories
+    - Booleans: True or False
+    
+    The following are present in your dataset:
+    """)
 
     st.pyplot(fig)
 
     st.write(f"""
-       To get some more information regarding the dataset, we can visualize some descritive statistics. For example, we are able to see how many instances occur in the dataset, the mean and standard deviation for every variable and more summary statistics.
-        The table below shows these statistics for the {option.split('/')[-1]} dataset.  
+       To get some more information regarding the dataset, we can visualize some descriptive statistics. For example, we are able to see how many instances occur in the dataset, the mean and standard deviation for every variable and more summary statistics.
+        The table below shows these statistics for the {option.split(string_splitter)[-1]} dataset.  
         """)
     st.dataframe(dataset.describe())
 
@@ -131,5 +141,4 @@ def return_preprocessing():
     st.markdown("""
     If the data visible here does not correspond to what you expect, go back a few steps.
     Your data should consist of seperate variables, which starts with a variable containing the notion of time.
-    Each variable should be measured at the moment in time, such as shown here:
     """)

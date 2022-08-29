@@ -76,9 +76,10 @@ def return_classifier():
         it can be used to detect unknown e-mails. The test data, which is separated in an earlier stage, is used to validate the performance of a given classifier. If the performance is good enough on 
         unseen data (the test data), we can assume that with future observations, the classifier will be able to make the distinction between classes. 
 
-        For this tool, we are mainly interested in the performance of the classifier so that we can determine which variable contributed the most to this outcomes. Thus, when we achieve a high accuracy score,
-        we can identify which variables are responsible for this particular score. With this information, you are able to do a further investigation on these variables in your production process. This could help
-        with optimizing the process of increasing the uptake of recycled material. 
+        For this tool, we are mainly interested in the performance of the classifier so that we can determine which variable contributed the most to this outcomes. 
+        Thus, we can identify which variables are responsible for this particular score. 
+        With this information, you are able to do a further investigation on these variables in your production process. 
+        If you can predict how and when products will be tossed out due to quality issues when using recyclates, this could help with optimizing the process and thereforeof increasing the uptake of recycled material .
 
         As a first step, we need to identify which dataset you want to inspect, which can be chosen in the box below:
         """)
@@ -87,7 +88,7 @@ def return_classifier():
     # st.header('Choose your data for classification (if target variable exists)')
 
 
-
+    st.markdown("#### Start the analysis")
     option = st.selectbox(
         'Which dataset do you want to use for your classification problem?',
         (i for i in data_files),format_func= lambda x:  str(x).split(string_splitter)[-1], key=1)
@@ -102,15 +103,20 @@ def return_classifier():
     ''')
 
     st.markdown('''
-    Now that we've seen the data format, we will remove variables from the dataset in the box below, if necessary:
+    ###### Now that we've seen the data format, we will remove variables from the dataset in the box below, if necessary:
+    ###### Do not remove anything you want to keep!
     ''')
-    remove_option_list = [i for i in dataset.columns]
-    to_be_removed = st.multiselect('Which variable could be removed from the dataset?',remove_option_list)
-    dataset = dataset.drop(to_be_removed,axis=1)
+    want_to_remove = st.checkbox('Do you need to remove variables? Click the box if needed, else continue!')
+    if want_to_remove:
+        remove_option_list = [i for i in dataset.columns]
+        to_be_removed = st.multiselect('Which variable could be removed from the dataset?',remove_option_list)
+        dataset = dataset.drop(to_be_removed,axis=1)
 
     st.subheader('Target variable selection')
     st.markdown('''
     Now that we've seen the data format and removed unwanted variables, we will choose the target variable from the dataset in the box below:
+    The target variable(s) would be the variable representing something you want to classify or predict.
+    ####### There could be more then 1! Just select them all, in a later step we will ask which one you want to focus on!
     ''')
 
     # option2 = st.selectbox(
@@ -120,7 +126,7 @@ def return_classifier():
     # dataset = dataset.drop(columns = [option2])
 
     option_list = [i for i in dataset.columns]
-    option2 = st.multiselect('Which variable resprents the target variable for the given dataset? We will separate this variable from the rest of the dataset',option_list)
+    option2 = st.multiselect('Which variable(s) resprents the target variable for the given dataset? We will separate this variable from the rest of the dataset',option_list)
     if len(option2) == 0:
         st.stop()
 

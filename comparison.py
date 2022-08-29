@@ -51,6 +51,8 @@ def return_comparison():
         To check what happened within every individual time serie and to compare them with each other, we can plot them on this tab and see what happened throughout the process.
         You can also select the detail of the x-axis in both plots, because some datasets can be measured every minute, hour or day.
         Therefore, the daterange selection-box provides an minute, hours and day (format (month/day/year)) view.
+
+        ###### If the x-axis of the plot is not showing a pleasant view, try changing the datarange!
         """)
     col1, col2 = st.columns(2)
 

@@ -66,7 +66,6 @@ def return_comparison():
             (i for i in data), format_func= lambda x:  str(x).split(string_splitter)[-1], key=1)
         if option == "Select a Dataset":
             st.stop()
-        st.markdown('### Output')
 
 
         option_daterange = st.selectbox(
@@ -94,6 +93,7 @@ def return_comparison():
 
         # fig = plt.plot(plot[option2])
         
+        st.markdown('### Output')
         fig, ax = plt.subplots()
         
         if option_daterange == 'minutes':
@@ -124,7 +124,6 @@ def return_comparison():
             (i for i in data), format_func= lambda x:  str(x).split(string_splitter)[-1], key=3)
         if option3 == "Select a Dataset":
             st.stop()
-        st.markdown('### Output')
         option_daterange = st.selectbox(
             'What daterange does your data have?',
             # ['Select dataset',(i for i in data)], format_func= lambda x:  str(x).split('/')[-1], key=1)
@@ -141,6 +140,7 @@ def return_comparison():
             (i for i in plot.columns), key=4)
         # fig = plt.plot(plot[option2])
         
+        st.markdown('### Output')
         fig, ax = plt.subplots()
         if option_daterange == 'minutes':
             myFmt = mdates.DateFormatter("%H:%M:%S")

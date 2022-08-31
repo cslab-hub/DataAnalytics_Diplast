@@ -50,7 +50,7 @@ def return_feature_selection():
     In other words, if two variables have a high correlation, we can drop on of the two! 
     This results in a more streamlined dataset which means less computational resources are needed for the task. But first, let's check the correlations between the variables of your dataset:     
     """)
-
+    st.markdown('### Input')
     option = st.selectbox(
     'Which dataset do you want to view?',
     # ['Select dataset',(i for i in data)], format_func= lambda x:  str(x).split('/')[-1], key=1)
@@ -58,7 +58,7 @@ def return_feature_selection():
 
     if option == "Select a Dataset":
         st.stop()
-
+    st.markdown('### Output')
     dataset = pd.read_csv(option)
     # dataset = dataset._get_numeric_data
     numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
@@ -89,8 +89,10 @@ def return_feature_selection():
     ''')
 
     option_list = [i for i in dataset.columns]
+    st.markdown('### Input')
     option7 = st.multiselect('Which variable could be removed from the dataset?',option_list)
 
+    st.markdown('### Output')
     if len(option7) == 0:
         corr = dataset.corr().round(2)
         corr.style.background_gradient(cmap='coolwarm')
@@ -172,6 +174,7 @@ def return_feature_selection():
     X = dataset
     option_list = [i for i in X.columns]
     option_list.insert(0,'select something or keep all variables')
+    st.markdown('### Input')
     option2 = st.multiselect('If your dataset contains Target variable(s), which are/is it? We will separate these from the rest of the dataset',option_list)
     # if len(option2) == 0:
         # st.stop()
@@ -192,7 +195,7 @@ def return_feature_selection():
     initial_feature_names = X.columns
     most_important_names = [initial_feature_names[most_important[i]] for i in range(n_pcs)]
     most_important_names2 = list(dict.fromkeys(most_important_names))
-    
+    st.markdown('### Output')
     for i,j in enumerate(most_important_names2):
         st.write(f"{i + 1}. Most important variable = {j}")
     
@@ -208,7 +211,7 @@ def return_feature_selection():
     col1, col2 = st.columns(2)
 
     with col1:
-        
+        st.markdown('### Input')
         plot = pd.read_csv(option)
         plot = plot.drop(option7,axis=1)
         if 'Time' in plot.columns:
@@ -218,8 +221,7 @@ def return_feature_selection():
         option4 = st.selectbox(
             'Which variable do you want to view?',
             (i for i in plot.columns), key=3)
-        # if option2 == "Select a Dataset":
-        #     st.stop()
+
 
         option_daterange = st.selectbox(
             'What daterange does your data have?',
@@ -229,6 +231,7 @@ def return_feature_selection():
 
 
         # fig = plt.plot(plot[option2])
+        st.markdown('### Output')
         
         fig, ax = plt.subplots()
         if option_daterange == 'minutes':
@@ -252,6 +255,7 @@ def return_feature_selection():
         
         
     with col2:
+        st.markdown('### Input')
 
         plot = pd.read_csv(option)
         plot = plot.drop(option7,axis=1)
@@ -270,6 +274,8 @@ def return_feature_selection():
             # ['Select dataset',(i for i in data)], format_func= lambda x:  str(x).split('/')[-1], key=1)
 
             (i for i in ['minutes','hours','days']), key=10)
+        st.markdown('### Output')
+        
         fig, ax = plt.subplots()
         if option_daterange == 'minutes':
             myFmt = mdates.DateFormatter("%H:%M:%S")

@@ -36,7 +36,7 @@ def data_loader():
     return found_files
 
 data = data_loader()
-# data.insert(0,'Select a Dataset')
+data.insert(0,'Select a Dataset')
 
 def return_comparison():
     st.markdown("""
@@ -58,11 +58,16 @@ def return_comparison():
 
     with col1:
         
+        st.markdown('### Input')
         option = st.selectbox(
             'Which dataset do you want to view?',
             # ['Select dataset',(i for i in data)], format_func= lambda x:  str(x).split('/')[-1], key=1)
 
             (i for i in data), format_func= lambda x:  str(x).split(string_splitter)[-1], key=1)
+        if option == "Select a Dataset":
+            st.stop()
+        st.markdown('### Output')
+
 
         option_daterange = st.selectbox(
             'What daterange does your data have?',
@@ -113,10 +118,13 @@ def return_comparison():
         
     with col2:
         
+        st.markdown('### Input')
         option3 = st.selectbox(
             'Which dataset do you want to view?',
             (i for i in data), format_func= lambda x:  str(x).split(string_splitter)[-1], key=3)
-
+        if option3 == "Select a Dataset":
+            st.stop()
+        st.markdown('### Output')
         option_daterange = st.selectbox(
             'What daterange does your data have?',
             # ['Select dataset',(i for i in data)], format_func= lambda x:  str(x).split('/')[-1], key=1)

@@ -88,7 +88,7 @@ def return_classifier():
     # st.header('Choose your data for classification (if target variable exists)')
 
 
-    st.markdown("#### Start the analysis")
+    st.markdown("### Input 1")
     option = st.selectbox(
         'Which dataset do you want to use for your classification problem?',
         (i for i in data_files),format_func= lambda x:  str(x).split(string_splitter)[-1], key=1)
@@ -102,15 +102,19 @@ def return_classifier():
     In the table above, we see the first 5 observations for every variable in the dataset. Based on this information, we can see the difference between the values for every variable and already make an asumption of the measurements that occurred in the dataset. Also, we might be able to identify the target variable.
     ''')
 
+    st.markdown('### Input 2')
     st.markdown('''
     ###### Now that we've seen the data format, we will remove variables from the dataset in the box below, if necessary:
     ###### Do not remove anything you want to keep!
     ''')
     want_to_remove = st.checkbox('Do you need to remove variables? Click the box if needed, else continue!')
     if want_to_remove:
+        st.markdown('### Input 3')
         remove_option_list = [i for i in dataset.columns]
         to_be_removed = st.multiselect('Which variable could be removed from the dataset?',remove_option_list)
         dataset = dataset.drop(to_be_removed,axis=1)
+        st.markdown('### Output 1-2(-3)')
+        st.write(f'We have removed {to_be_removed} from the dataset!')
 
     st.subheader('Target variable selection')
     st.markdown('''
@@ -124,7 +128,7 @@ def return_classifier():
     #     (i for i in dataset.columns), key=1)
     # target_data = dataset[option2]
     # dataset = dataset.drop(columns = [option2])
-
+    st.markdown('### Input 4')
     option_list = [i for i in dataset.columns]
     option2 = st.multiselect('Which variable(s) resprents the target variable for the given dataset? We will separate this variable from the rest of the dataset',option_list)
     if len(option2) == 0:
@@ -133,7 +137,7 @@ def return_classifier():
     if len(option2) == 1:
         target_data = dataset[option2]
         dataset = dataset.drop(option2,axis=1)
-
+    st.markdown('### Input 5')
     if len(option2) > 1:
         option_ifmore = st.selectbox(
         'Which variable resprents the labels for the given dataset? We will separate this variable from the rest of the dataset ', 
@@ -142,10 +146,11 @@ def return_classifier():
         dataset = dataset.drop(option_ifmore,axis=1)
         dataset = dataset.drop([item for item in option2 if item not in option_ifmore],axis=1)
 
-
+    st.markdown('### Output 4-(5)')
     st.markdown(f""" Now that we have identified which data we will use to classify the labels represented by {option2}, we can start to proceed with making a classifier. The next step is to choose the right classifier for the job.
-    For this, we will give you some additional information for choosing the right classifier.
-
+    For this, we will give you some additional information for choosing the right classifier!""")
+    st.write()
+    st.markdown("""
     To get a general idea of what a classifier can do, we give you the option to choose between several algorithms:
     - Decision Tree (Categorical)
     - Random Forest (Categorical)
@@ -157,8 +162,8 @@ def return_classifier():
     For example, types of plastic used: PP, PET etc.
     Continuous variables are variables that are obtained by measuring or counting something, and can therefore take on all real values.
     Examples are the pressure and temperature in an extruder machine. 
-                """) 
-
+    """) 
+    st.markdown('### Input 6')
     option3 = st.selectbox(
         'Which classifier do you want to use?',
         ('Select an Algorithm','Decision Tree', 'Random Forest','Logistic Regression','Random Forrest Regressor'), key= 1)
@@ -172,6 +177,7 @@ def return_classifier():
     scaler= StandardScaler()
     scaled_x_train = scaler.fit_transform(x_train)
     scaled_x_test = scaler.transform(x_test)
+    st.markdown('### Ouput 6')
     st.write(f'training set size: {x_train.shape[0]} samples \ntest set size: {x_test.shape[0]} samples')
     st.write(f'Number of columns {len(dataset.columns)} and rows {len(dataset)}')
 

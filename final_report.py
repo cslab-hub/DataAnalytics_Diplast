@@ -45,6 +45,7 @@ def return_report():
     This overview gives you a variety of insights such as alerts in the data, a histogram that shows the distribution of values and also the 5 most common and most extreme values.
     With this information, you can get an indication of the measurements within your variables to check if the values align with the desired behavior of the variable. After running the profiling for your dataset, the report can be downloaded at the bottom of this page.""")
     # ls = ['']
+    st.markdown('### Input')
     option = st.selectbox(
         'Which dataset do you want to view?',
         # ['',i for i in data], format_func=lambda x: 'Select an option' if x == '' else x)
@@ -52,6 +53,7 @@ def return_report():
         (i for i in data), format_func= lambda x:  str(x).split(string_splitter)[-1], key=1)
     if option == 'Select a Dataset':
         st.stop()
+    st.markdown('### Output')
     dataset = pd.read_csv(option)
     # print(dataset.dtypes)
 

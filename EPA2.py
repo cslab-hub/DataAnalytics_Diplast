@@ -69,7 +69,7 @@ def return_EPA():
     def get_data():
 
         data = pd.read_csv(option,index_col=0)
-        data = data.reset_index(drop=True)
+        #data = data.reset_index(drop=True)
 
         assert len(np.unique(data.index)) == len(data.index), "Index column contains duplicate values"
 

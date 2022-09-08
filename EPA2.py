@@ -107,14 +107,14 @@ def return_EPA():
     dataset_production = get_data()
 
     
-    # print('we actually got here')
+    # # print('we actually got here')
 
-    n_rows = dataset_production.shape[0]
-    number_of_rows = st.slider('How many observations do you want to investigate?', 0, n_rows, int(n_rows/10))
-    # dataset_production = dataset_production.groupby('label').apply(lambda x: x.sample(n=number_of_rows)).reset_index(drop = True)
-    dataset_production = dataset_production.iloc[:number_of_rows,:]
-    # dataset_production.loc[dataset_production["label"] == 0, "label"] = 'non_recycled'
-    # dataset_production.loc[dataset_production["label"] == 1, "label"] = 'recycled'
+    # n_rows = dataset_production.shape[0]
+    # number_of_rows = st.slider('How many observations do you want to investigate?', 0, n_rows, int(n_rows/10))
+    # # dataset_production = dataset_production.groupby('label').apply(lambda x: x.sample(n=number_of_rows)).reset_index(drop = True)
+    # dataset_production = dataset_production.iloc[:number_of_rows,:]
+    # # dataset_production.loc[dataset_production["label"] == 0, "label"] = 'non_recycled'
+    # # dataset_production.loc[dataset_production["label"] == 1, "label"] = 'recycled'
 
     st.markdown(
     '''

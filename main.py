@@ -10,7 +10,7 @@ from data_inspection import *
 from ts_classifier import *
 from final_report import *
 from feature_selection import *
-# from EPA2 import *
+from EPA2 import *
 import base64
 
 
@@ -53,8 +53,8 @@ if add_selectbox == 'Classifier':
     return_classifier()
 
 
-# if add_selectbox == 'Exploratory Pattern Analytics':
-#     return_EPA()
+if add_selectbox == 'Exploratory Pattern Analytics':
+    return_EPA()
 
 
 if add_selectbox == 'Final Data Report':

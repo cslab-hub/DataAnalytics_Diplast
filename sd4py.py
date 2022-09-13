@@ -55,14 +55,14 @@ class PyOntology:
             if x.dtype == 'object' or x.dtype == 'bool' or x.dtype.name == 'category': # category depends on whether it's ordered?
 
                 nominal_arrays.append(
-                    JArray(JString)(x.astype(str))
+                    JArray(JString)(x.astype(str).values)
                 )
                 self.column_types.append("nominal")
                 
             elif np.issubdtype(x.dtype, np.datetime64):
                 
                 numeric_arrays.append(
-                    JArray(JDouble)(pd.to_numeric(x))
+                    JArray(JDouble)(pd.to_numeric(x).values)
                 )
                 self.column_types.append("numeric")
                 self.datetime_columns[name] = x.dt.tz
@@ -70,7 +70,7 @@ class PyOntology:
             elif np.issubdtype(x.dtype, np.timedelta64): 
                 
                 numeric_arrays.append(
-                    JArray(JDouble)(pd.to_numeric(x))
+                    JArray(JDouble)(pd.to_numeric(x).values)
                 )
                 self.column_types.append("numeric")
                 self.timedelta_columns.append(name)
@@ -78,7 +78,7 @@ class PyOntology:
             elif np.issubdtype(x.dtype, np.number):
 
                 numeric_arrays.append(
-                    JArray(JDouble)(pd.to_numeric(x))
+                    JArray(JDouble)(pd.to_numeric(x).values)
                 )
                 self.column_types.append("numeric")
 

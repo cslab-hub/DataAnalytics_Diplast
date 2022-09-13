@@ -187,7 +187,7 @@ def return_EPA():
 
                 st.pyplot(plt.gcf())
 
-                @st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
+                #@st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
                 def get_selected_period():
 
                     return dataset_production[selected_period[0]:selected_period[1]]
@@ -230,7 +230,7 @@ def return_EPA():
                     (dataset_production[filtering_column].max() - dataset_production[filtering_column].min()) / 20
                 )
 
-                @st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
+                #@st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
                 def get_numeric_filtering():
 
                     return dataset_production[dataset_production[filtering_column].gt(min_filtering) & dataset_production[filtering_column].lt(max_filtering)]
@@ -240,7 +240,7 @@ def return_EPA():
             else:
                 keep_values = st.multiselect("Select values to keep", np.unique(dataset_production[filtering_column].astype(str).values))
                 
-                @st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
+                #@st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
                 def get_nonnumeric_filtering():
 
                     return dataset_production[dataset_production[filtering_column].astype(str).apply(lambda x: x in keep_values)]
@@ -260,10 +260,10 @@ def return_EPA():
         '''
         )
 
-        keep_interval = st.number_input('Interval: ', value=2, step=1, min_value=2)
+        keep_interval = st.number_input('Interval: ', value=1, step=1, min_value=1)
         st.write('1 out of every {} data points will be kept.'.format(keep_interval))
 
-        @st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
+        #@st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
         def get_interval_filtering():
 
             return dataset_production[(np.arange(len(dataset_production)) % keep_interval) == 0]
@@ -291,9 +291,21 @@ def return_EPA():
 
     value = None
 
-    if analysis_type == 'Event detection':
+    #@st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
+    def nominalise_target():
+
+        dataset_production.loc[:,target] = dataset_production.loc[:,target].astype(str) 
+
+    if (analysis_type in ['Event detection', 'Classification']) and (target_nominal is False):
     
-        assert target_nominal, "With event detection, the target must be a non-numeric variable indicating when the event occurs."
+        #assert target_nominal, "With event detection, the target must be a non-numeric variable indicating when the event occurs."
+        st.warning('Chosen target variable was numeric, and has been converted to nominal.')
+        nominalise_target()
+        target_nominal = True
+
+    if (analysis_type == 'High average') and target_nominal:
+
+        assert False, 'For "High average" type of analysis, the target variable must be numeric.'
 
     if target_nominal:
 
@@ -317,20 +329,20 @@ def return_EPA():
         if (within > 0) and (within_unit != ""): 
 
             @st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
-            def get_new_target(data):
+            def get_new_target(series, target):
                 # Remember to initialise to False!
-                new_target = pd.Series(index=data.index, dtype='bool', name=target)#, name='{}=={} (within {})'.format(target, value, within))
+                new_target = pd.Series(index=series.index, dtype='bool', name=target)#, name='{}=={} (within {})'.format(target, value, within))
                 new_target[:] = False
 
-                for idx in data.index:
+                for idx in series.index:
 
-                    if data[target][idx:idx + pd.Timedelta(within, unit=within_unit.lower())].eq(value).any():
+                    if series[idx:idx + pd.Timedelta(within, unit=within_unit.lower())].eq(value).any():
 
                         new_target[idx] = True
                 
-                return dataset_production.drop(columns=[target]).join(new_target)
+                return new_target
             
-            dataset_production = get_new_target(dataset_production)
+            dataset_production = dataset_production.drop(columns=[target]).join(get_new_target(dataset_production[target], target))
             value = True # Remember to change the target value!
 
     columns_to_ignore = st.multiselect(
@@ -353,7 +365,7 @@ def return_EPA():
 
     if columns_to_ignore and len(columns_to_ignore) > 0:
 
-        @st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
+        #@st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
         def get_drop_columns(data):
 
             return data.drop(columns=columns_to_ignore)
@@ -381,6 +393,15 @@ def return_EPA():
     Larger numbers indicate a greater difference. Estimated 5% and 95% confidence intervals are shown for Hedge's G. 
     '''
     )
+    @st.cache()
+    def get_analysis_data(dataset_production):
+
+        return dataset_production.copy()
+    
+    dataset_production = get_analysis_data(dataset_production)
+
+    print(dataset_production.columns)
+
     @st.cache(hash_funcs={pd.DataFrame: id, sd4py.PySubgroupResults:id})
     def get_subgroups():
 

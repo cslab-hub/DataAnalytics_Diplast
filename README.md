@@ -1,7 +1,7 @@
 # Data_Analytics_DIPLAST
 
  <p align="left">
-    <img src="./di-plast-logo.png", width = "500", height="500">
+    <img src="./images/di-plast-logo.png", width = "500", height="500">
  </p>
 
 

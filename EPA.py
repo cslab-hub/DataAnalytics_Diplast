@@ -55,6 +55,15 @@ def get_img_array_bytes(fig):
 def return_EPA():
 
     st.title('Exploratory Pattern Analytics (EPA)')
+
+    st.markdown(
+    '''
+    Welcome to the Exploratory Pattern Analytics (EPA) tool. 
+    This tool makes it possible to find interesting groups of data points within your data, which are described through simple patterns. 
+    More information, and guidelines for the tool (available through the link provided in the "Tool guideline and access" section), 
+    are provided in the [EPA tool page of the Di-Plast Wiki](https://di-plast.sis.cs.uos.de/Wiki.jsp?page=Exploratory%20Pattern%20Analytics). 
+    ''')
+
     option = st.selectbox(
         'Which dataset do you want to view?',
         (i for i in data), format_func= lambda x:  str(x).split('/')[-1], key=1)

@@ -10,7 +10,7 @@ from data_inspection import *
 from ts_classifier import *
 from final_report import *
 from feature_selection import *
-from EPA2 import *
+from EPA import *
 import base64
 
 

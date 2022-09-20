@@ -74,7 +74,7 @@ def return_EPA():
     def get_data():
 
         data = pd.read_csv(option,index_col=0)
-
+        data = data[~data.index.duplicated(keep='first')]
         assert len(np.unique(data.index)) == len(data.index), "Index column contains duplicate values"
 
         if data.index.dtype == 'object' or data.index.dtype.name == 'category':

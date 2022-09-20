@@ -14,6 +14,11 @@ import sys
 # dataframe.columns = ['var1','var2','var3','var4']
 # dataframe.to_csv('data/dataset.csv', index=False)
 
+reduce_header_height_style = """
+    <style>
+        div.block-container {padding-top:1rem;}
+    </style>
+"""
 
 
 if sys.platform == 'win32':
@@ -46,13 +51,16 @@ def return_comparison():
         .css-jn99sy {display: none}
         </style>
         """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <style>
+        div.block-container {padding-top:0rem;}
+    </style>
+    """, unsafe_allow_html=True)
+    
     st.header('Compare two time series')
     st.markdown("""
         To check what happened within every individual time serie and to compare them with each other, we can plot them on this tab and see what happened throughout the process.
-        You can also select the detail of the x-axis in both plots, because some datasets can be measured every minute, hour or day.
-        Therefore, the daterange selection-box provides an minute, hours and day (format (month/day/year)) view.
-
-        ###### If the x-axis of the plot is not showing a pleasant view, try changing the datarange!
         """)
     col1, col2 = st.columns(2)
 
@@ -67,53 +75,24 @@ def return_comparison():
         if option == "Select a Dataset":
             st.stop()
 
-
-        option_daterange = st.selectbox(
-            'What daterange does your data have?',
-            # ['Select dataset',(i for i in data)], format_func= lambda x:  str(x).split('/')[-1], key=1)
-
-            (i for i in ['minutes','hours','days']), key=10)
-        # if option == "Select a Dataset":
-        #     st.stop()
         plot = pd.read_csv(option)
+        data_columns = [i for i in plot.columns]
+        data_columns.insert(0, 'Select Variable')
+        option_daterange = st.selectbox('which variable represents time?',(i for i in data_columns), key=2)
 
-        if 'Time' in plot.columns:
-            # print('yes we found it')
-            plot['Time'] = pd.to_datetime(plot['Time'])
-            plot.set_index('Time', inplace=True)
-        # print(plot)
+        if option_daterange == 'Select Variable':
+            st.stop()
+        else:
+            plot = plot.drop(option_daterange, axis=1)
+            
         option2 = st.selectbox(
             'Which variable do you want to view?',
-            (i for i in plot.columns), key=2)
-        # if option2 == "Select a Dataset":
-        #     st.stop()
-
-                    
-
-
-        # fig = plt.plot(plot[option2])
+            (i for i in plot.columns), key=3)
         
         st.markdown('### Output')
         fig, ax = plt.subplots()
-        
-        if option_daterange == 'minutes':
-            myFmt = mdates.DateFormatter("%H:%M:%S")
-            ax.xaxis.set_major_formatter(myFmt)
-            ax.plot(plot[option2])
-        if option_daterange == 'hours':
-            myFmt = mdates.DateFormatter("%H:%M")
-            ax.xaxis.set_major_formatter(myFmt)
-            ax.plot(plot[option2])
-        if option_daterange == 'days':
-            myFmt = mdates.DateFormatter("%D")
-            ax.xaxis.set_major_formatter(myFmt)
-            ax.plot(plot[option2])
+        ax.plot(plot[option2])
         st.pyplot(fig)
-        
-        # st.pyplot(fig)
-        
-        
-        
         
         
     with col2:
@@ -121,37 +100,27 @@ def return_comparison():
         st.markdown('### Input')
         option3 = st.selectbox(
             'Which dataset do you want to view?',
-            (i for i in data), format_func= lambda x:  str(x).split(string_splitter)[-1], key=3)
-        if option3 == "Select a Dataset":
-            st.stop()
-        option_daterange = st.selectbox(
-            'What daterange does your data have?',
             # ['Select dataset',(i for i in data)], format_func= lambda x:  str(x).split('/')[-1], key=1)
 
-            (i for i in ['minutes','hours','days']), key=20)
-        plot = pd.read_csv(option3)
-        if 'Time' in plot.columns:
-            # print('yes we found it')
-            plot['Time'] = pd.to_datetime(plot['Time'])
-            plot.set_index('Time', inplace=True)
+            (i for i in data), format_func= lambda x:  str(x).split(string_splitter)[-1], key=4)
+        if option3 == "Select a Dataset":
+            st.stop()
 
+        plot = pd.read_csv(option3)
+        data_columns = [i for i in plot.columns]
+        data_columns.insert(0, 'Select Variable')
+        option_daterange_2 = st.selectbox('which variable represents time?',(i for i in data_columns), key=5)
+
+        if option_daterange_2 == 'Select Variable':
+            st.stop()
+        else:
+            plot = plot.drop(option_daterange_2, axis=1)
+            
         option4 = st.selectbox(
             'Which variable do you want to view?',
-            (i for i in plot.columns), key=4)
-        # fig = plt.plot(plot[option2])
+            (i for i in plot.columns), key=6)
         
         st.markdown('### Output')
         fig, ax = plt.subplots()
-        if option_daterange == 'minutes':
-            myFmt = mdates.DateFormatter("%H:%M:%S")
-            ax.xaxis.set_major_formatter(myFmt)
-            ax.plot(plot[option4])
-        if option_daterange == 'hours':
-            myFmt = mdates.DateFormatter("%H:%M")
-            ax.xaxis.set_major_formatter(myFmt)
-            ax.plot(plot[option4])
-        if option_daterange == 'days':
-            myFmt = mdates.DateFormatter("%D")
-            ax.xaxis.set_major_formatter(myFmt)
-            ax.plot(plot[option4])
+        ax.plot(plot[option4])
         st.pyplot(fig)

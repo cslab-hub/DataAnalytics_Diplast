@@ -18,7 +18,7 @@ import base64
 st.sidebar.image('images/di-plast-logo.png', use_column_width=True)
 
 st.sidebar.title("Select a Module")
-    
+
 
 add_selectbox = st.sidebar.radio(
     "Choose one of the analytics options:",

@@ -76,14 +76,11 @@ def return_comparison():
             st.stop()
 
         plot = pd.read_csv(option)
+        print(f'dataset shapes = {plot.shape}')
+        plot = plot.select_dtypes(include='number')
+        print(f'dataset shapes after = {plot.shape}')
         data_columns = [i for i in plot.columns]
         data_columns.insert(0, 'Select Variable')
-        option_daterange = st.selectbox('which variable represents time?',(i for i in data_columns), key=2)
-
-        if option_daterange == 'Select Variable':
-            st.stop()
-        else:
-            plot = plot.drop(option_daterange, axis=1)
             
         option2 = st.selectbox(
             'Which variable do you want to view?',
@@ -107,14 +104,11 @@ def return_comparison():
             st.stop()
 
         plot = pd.read_csv(option3)
+        print(f'dataset shapes = {plot.shape}')
+        plot = plot.select_dtypes(include='number')
+        print(f'dataset shapes after = {plot.shape}')
         data_columns = [i for i in plot.columns]
         data_columns.insert(0, 'Select Variable')
-        option_daterange_2 = st.selectbox('which variable represents time?',(i for i in data_columns), key=5)
-
-        if option_daterange_2 == 'Select Variable':
-            st.stop()
-        else:
-            plot = plot.drop(option_daterange_2, axis=1)
             
         option4 = st.selectbox(
             'Which variable do you want to view?',

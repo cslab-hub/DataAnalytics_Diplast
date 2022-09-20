@@ -60,11 +60,10 @@ def return_preprocessing():
 
 
     st.write(pd.DataFrame({
-        'Time': ['21-12-21 10:00:00', '21-12-21 10:00:01','21-12-21 10:00:02','21-12-21 10:00:03'],
-        'Sensor1': [10, 10, 11, 10],
-        'Sensor2': [14,15,14,14],
-        'Sensor3': [100.1,100.3,100.2,100.0],
-        'Sensor4': [90.1,89.4,88.3,90]
+        'Pressure': [10, 10, 11, 10],
+        'Pressure_Gap': [14,15,14,14],
+        'Heat_Sensor_1': [100.1,100.3,100.2,100.0],
+        'Heat_Sensor_2': [90.1,89.4,88.3,90]
     }).style.set_table_styles([
                 {"selector":"caption",
                 "props":[("text-align","center"),("caption-side","top")],
@@ -94,12 +93,9 @@ def return_preprocessing():
         st.stop()
     
     dataset = pd.read_csv(option)
-    if 'Time' in dataset.columns:
-        dataset['Time'] = pd.to_datetime(dataset['Time'])
-        dataset = dataset.set_index('Time')
-    if 'TIME' in dataset.columns:
-        dataset['TIME'] = pd.to_datetime(dataset['TIME'])
-        dataset = dataset.set_index('TIME')
+    print(f'dataset shapes = {dataset.shape}')
+    dataset = dataset.select_dtypes(include='number')
+    print(f'dataset shapes after = {dataset.shape}')
 
     st.markdown('## Output')
     st.write("""

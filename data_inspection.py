@@ -53,6 +53,7 @@ def return_preprocessing():
     A good dataset is:
     - In the CSV format (Comma Separated Values) 
     - Does not contain too many variables (keep it below 20)
+    - Each observation (row) is equally long ago compared to the previous observation
 
     Example of a good dataset:
     """)
@@ -83,6 +84,8 @@ def return_preprocessing():
     st.markdown("""
     For more information, we advise you to check our data validation tool that can be accessed [here](https://cslab-hub-data-validation-main-bx6ggw.streamlitapp.com/)
     """)
+    
+    st.image('images/exportcsv.png', caption='how to export excel to csv')
 
     st.markdown('## Input')
     option = st.selectbox(

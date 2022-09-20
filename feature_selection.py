@@ -60,6 +60,11 @@ def return_feature_selection():
         st.stop()
     st.markdown('### Output')
     dataset = pd.read_csv(option)
+    print(f'dataset shapes = {dataset.shape}')
+    dataset = dataset.select_dtypes(include='number')
+    print(f'dataset shapes after = {dataset.shape}')
+    
+    
     # dataset = dataset._get_numeric_data
     numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
 
@@ -213,39 +218,20 @@ def return_feature_selection():
     with col1:
         st.markdown('### Input')
         plot = pd.read_csv(option)
+        print(f'dataset shapes = {plot.shape}')
+        plot = plot.select_dtypes(include='number')
+        print(f'dataset shapes after = {plot.shape}')
         plot = plot.drop(option7,axis=1)
-        if 'Time' in plot.columns:
-            plot['Time'] = pd.to_datetime(plot['Time'])
-            plot.set_index('Time', inplace=True)
+
         # print(plot)
         option4 = st.selectbox(
             'Which variable do you want to view?',
             (i for i in plot.columns), key=3)
 
-
-        option_daterange = st.selectbox(
-            'What daterange does your data have?',
-            # ['Select dataset',(i for i in data)], format_func= lambda x:  str(x).split('/')[-1], key=1)
-
-            (i for i in ['minutes','hours','days']), key=20)
-
-
-        # fig = plt.plot(plot[option2])
         st.markdown('### Output')
         
         fig, ax = plt.subplots()
-        if option_daterange == 'minutes':
-            myFmt = mdates.DateFormatter("%H:%M:%S")
-            ax.xaxis.set_major_formatter(myFmt)
-            ax.plot(plot[option4])
-        if option_daterange == 'hours':
-            myFmt = mdates.DateFormatter("%H:%M")
-            ax.xaxis.set_major_formatter(myFmt)
-            ax.plot(plot[option4])
-        if option_daterange == 'days':
-            myFmt = mdates.DateFormatter("%D")
-            ax.xaxis.set_major_formatter(myFmt)
-            ax.plot(plot[option4])
+        ax.plot(plot[option4])
         st.pyplot(fig)
         
         # st.pyplot(fig)
@@ -258,37 +244,21 @@ def return_feature_selection():
         st.markdown('### Input')
 
         plot = pd.read_csv(option)
+        print(f'dataset shapes = {plot.shape}')
+        plot = plot.select_dtypes(include='number')
+        print(f'dataset shapes after = {plot.shape}')
         plot = plot.drop(option7,axis=1)
         
-        if 'Time' in plot.columns:
-            plot['Time'] = pd.to_datetime(plot['Time'])
-            plot.set_index('Time', inplace=True)
-
         option6 = st.selectbox(
             'Which variable do you want to view?',
             (i for i in plot.columns), key=5)
         # fig = plt.plot(plot[option2])
         
-        option_daterange = st.selectbox(
-            'What daterange does your data have?',
-            # ['Select dataset',(i for i in data)], format_func= lambda x:  str(x).split('/')[-1], key=1)
 
-            (i for i in ['minutes','hours','days']), key=10)
         st.markdown('### Output')
         
         fig, ax = plt.subplots()
-        if option_daterange == 'minutes':
-            myFmt = mdates.DateFormatter("%H:%M:%S")
-            ax.xaxis.set_major_formatter(myFmt)
-            ax.plot(plot[option6])
-        if option_daterange == 'hours':
-            myFmt = mdates.DateFormatter("%H:%M")
-            ax.xaxis.set_major_formatter(myFmt)
-            ax.plot(plot[option6])
-        if option_daterange == 'days':
-            myFmt = mdates.DateFormatter("%D")
-            ax.xaxis.set_major_formatter(myFmt)
-            ax.plot(plot[option6])
+        ax.plot(plot[option6])
         st.pyplot(fig)
 
             

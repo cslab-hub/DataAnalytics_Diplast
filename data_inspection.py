@@ -52,7 +52,6 @@ def return_preprocessing():
     st.markdown("""
     A good dataset is:
     - In the CSV format (Comma Separated Values) 
-    - Has as first column a Date, which we wel automatically use as an index.
     - Does not contain too many variables (keep it below 20)
 
     Example of a good dataset:

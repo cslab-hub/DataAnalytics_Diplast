@@ -55,6 +55,9 @@ def return_report():
         st.stop()
     st.markdown('### Output')
     dataset = pd.read_csv(option)
+    print(f'dataset shapes = {dataset.shape}')
+    dataset = dataset.select_dtypes(include='number')
+    print(f'dataset shapes after = {dataset.shape}')
     # print(dataset.dtypes)
 
     st.write('You selected:', option)

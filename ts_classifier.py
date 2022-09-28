@@ -96,9 +96,9 @@ def return_classifier():
     if option == "Select a Dataset":
         st.stop()
     dataset = pd.read_csv(option)
-    print(f'dataset shapes = {dataset.shape}')
-    dataset = dataset.select_dtypes(include='number')
-    print(f'dataset shapes after = {dataset.shape}')
+    # print(f'dataset shapes = {dataset.shape}')
+    # dataset = dataset.select_dtypes(include='number')
+    # print(f'dataset shapes after = {dataset.shape}')
 
     st.dataframe( dataset.head(5))
     st.markdown('''

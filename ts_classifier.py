@@ -96,9 +96,9 @@ def return_classifier():
     if option == "Select a Dataset":
         st.stop()
     dataset = pd.read_csv(option)
-    # print(f'dataset shapes = {dataset.shape}')
-    # dataset = dataset.select_dtypes(include='number')
-    # print(f'dataset shapes after = {dataset.shape}')
+    print(f'dataset shapes = {dataset.shape}')
+    dataset = dataset.select_dtypes(include='number')
+    print(f'dataset shapes after = {dataset.shape}')
 
     st.dataframe( dataset.head(5))
     st.markdown('''
@@ -118,6 +118,9 @@ def return_classifier():
         dataset = dataset.drop(to_be_removed,axis=1)
         st.markdown('### Output 1-2(-3)')
         st.write(f'We have removed {to_be_removed} from the dataset!')
+        
+    st.markdown('your dataset now looks like this!')
+    st.dataframe( dataset.head(5))
 
     st.subheader('Target variable selection')
     st.markdown('''

@@ -44,7 +44,7 @@ def return_preprocessing():
     st.markdown(""" ## First inspect your data""")
     
     st.markdown("""
-        While the data should have already been checked with the tips from the Data Validation [tool](https://cslab-hub-data-validation-main-bx6ggw.streamlitapp.com/), we should again check if indeed our data now is correct.
+        While the data should have already been checked with the tips from the Data Validation [tool](https://diplastdatavalidation.streamlitapp.com/), we should again check if indeed our data now is correct.
         In the following dropdown box, select the dataset that you want to view.
         This dataset should be put into the data folder where this software runs from.
     """)
@@ -82,7 +82,7 @@ def return_preprocessing():
                 , unsafe_allow_html=True)
     st.write("")
     st.markdown("""
-    For more information, we advise you to check our data validation tool that can be accessed [here](https://cslab-hub-data-validation-main-bx6ggw.streamlitapp.com/)
+    For more information, we advise you to check our data validation tool that can be accessed [here](https://diplastdatavalidation.streamlitapp.com/)
     """)
     
     st.image('images/exportcsv.png', caption='how to export excel to csv')
